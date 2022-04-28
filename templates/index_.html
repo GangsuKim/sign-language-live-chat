@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noom</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+    integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- For JQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Noom</h1>
+    </header>
+    <main>
+        <div id="welcome">
+            <form>
+                <input placeholder="room name" required type="text">
+                <button>Enter Room</button>
+            </form>
+        </div>
+        <div id="call">
+            <div id="myStream">
+                <video id="myFace" autoplay playsinline width="400"></video>
+                <button id="mute">Mute</button>
+                    <button id="camera">Turn Camera off</button>
+                    <select id="cameras"></select>
+            </div>
+        </div>
+    </main>
+    <!-- <script src="/static/socket.io/socket.io.js"></script> -->
+    <div id="ttsDiv"></div>
+    <script src="/static/app.js"></script>
+    <script src="/static/js/tts.js"></script>
+</body>
+
+</html>
