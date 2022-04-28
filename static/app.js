@@ -11,6 +11,8 @@ const call = document.getElementById("call");
 const myNameH1 = document.getElementById('myName');
 const footBar = document.getElementById('footBar');
 
+const userId = generateUserID();
+
 call.hidden = true;
 myNameH1.hidden = true;
 footBar.hidden = true;
@@ -242,3 +244,9 @@ socket.on("streamTTS", data => {
     }
 });
 
+function generateUserID() {
+    let date = new Date();
+    const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
+    var hash = CryptoJS.SHA256(userString);
+    return hash.toString();
+}
