@@ -250,3 +250,25 @@ function generateUserID() {
     var hash = CryptoJS.SHA256(userString);
     return hash.toString();
 }
+
+// Video to Photo
+const canvas = document.getElementById('canvas');
+const photo = document.getElementById('photo');
+const photoBtn = document.getElementById('capImage');
+// const myFace = document.getElementById('myFace'); //myFace
+
+photoBtn.addEventListener("click", capturePhoto);
+
+function capturePhoto() {
+    var context = canvas.getContext('2d');
+
+    canvas.width = 400;
+    canvas.height = 300;
+    context.drawImage(myFace, 0, 0, 400, 300);
+
+    var data = canvas.toDataURL('image/png');
+    photo.setAttribute('src', data);
+    console.log(data);
+}
+
+// setInterval(capturePhoto, 20); // 무한촬영
