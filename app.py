@@ -58,15 +58,18 @@ def getID(userId):
 
 @socketio.on('signImage')
 def signImage(userImage):
-    userImage = userImage + '=' * (4 - len(userImage) % 4)
     now = datetime.now()
-    image = base64.b64decode(userImage)
     path = "./images/"
+
+    userImage = userImage + '=' * (4 - len(userImage) % 4)
+    userImage = userImage.replace('\n','')
+    userImage = userImage.replace("data:image/png;base64,",'')
+
+    image = base64.b64decode(userImage)
     file_name = str(now.timestamp()) + ".png"
 
     with open(path + file_name, 'wb') as f:
         f.write(image)
-    print('Image Received')
     return
 
 @socketio.on_error()
