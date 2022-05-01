@@ -1,8 +1,13 @@
+from dataclasses import replace
+from email.mime import image
 from flask import Flask,render_template  # 서버 구현을 위한 Flask 객체 import
 from flask_restx import Api, Resource # Api 구현을 위한 Api 객체 import
 from numpy import broadcast  
 from pyngrok import conf, ngrok
 from flask_socketio import SocketIO, join_room, emit
+import base64
+from datetime import datetime
+import os
 
 # users = []
 
@@ -49,6 +54,19 @@ def disconnecting():
 @socketio.on('idConnection')
 def getID(userId):
     # users.append(userId)
+    return
+
+@socketio.on('signImage')
+def signImage(userImage):
+    userImage = userImage + '=' * (4 - len(userImage) % 4)
+    now = datetime.now()
+    image = base64.b64decode(userImage)
+    path = "./images/"
+    file_name = str(now.timestamp()) + ".png"
+
+    with open(path + file_name, 'wb') as f:
+        f.write(image)
+    print('Image Received')
     return
 
 @socketio.on_error()
