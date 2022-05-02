@@ -84,12 +84,12 @@ function handleMuteClick() {
 
     if (!muted) {
         // muteBtn.innerHTML = "Unmute";
-        micIcon.setAttribute('class','bi bi-mic-mute-fill');
+        micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
         muted = true;
         stopReco();
     } else {
         // muteBtn.innerHTML = "Mute"
-        micIcon.setAttribute('class','bi bi-mic-fill');
+        micIcon.setAttribute('class', 'bi bi-mic-fill');
         muted = false;
         startReco();
     }
@@ -100,16 +100,23 @@ function handleCameraClick() {
     const cameraIcon = cameraBtn.getElementsByTagName('i')[0];
 
     if (cameraOff) {
-        // cameraBtn.innerText = "Turn Camera Off";
-        cameraIcon.setAttribute('class','bi bi-camera-video-fill');
+        cameraIcon.setAttribute('class', 'bi bi-camera-video-fill');
         cameraOff = false;
-        // myNameH1.hidden = true;
     } else {
-        // cameraBtn.innerText = "Turn Camera On";
-        // bi bi-camera-video-off-fill
-        cameraIcon.setAttribute('class','bi bi-camera-video-off-fill');
+        cameraIcon.setAttribute('class', 'bi bi-camera-video-off-fill');
         cameraOff = true;
-        // myNameH1.hidden = false;
+    }
+}
+
+// 카메라 전환 시 마이크 표시 문제 해결
+function handleMuteChange() {
+    const micIcon = muteBtn.getElementsByTagName('i')[0];
+    if (muted) {
+        myStream.getAudioTracks().forEach((track) => (track.enabled = false));
+        micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
+    } else {
+        myStream.getAudioTracks().forEach((track) => (track.enabled = true));
+        micIcon.setAttribute('class', 'bi bi-mic-fill');
     }
 }
 
@@ -119,6 +126,7 @@ async function handleCameraChange() {
         const videoTrack = myStream.getVideoTracks()[0];
         const videoSender = myPeerConnection.getSenders().find(sender => sender.track.kind == "video");
         videoSender.replaceTrack(videoTrack);
+        handleMuteChange();
     }
 }
 
@@ -187,7 +195,7 @@ function makeConnection() {
                 "stun:stun3.l.google.com:19302",
                 "stun:stun4.l.google.com:19302",
             ],
-        }, ],
+        },],
     }); // Create p2p 
     myPeerConnection.addEventListener("icecandidate", handleIce);
     myPeerConnection.addEventListener("addstream", handleAddStrean);
