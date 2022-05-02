@@ -1,2 +1,2 @@
 # sign-language-live-chat
-Hallym Univ. 2022 Capston
+한림대학교 2022년도 1학기 캡스톤 디자인 Web part
