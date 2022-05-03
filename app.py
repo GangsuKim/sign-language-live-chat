@@ -19,26 +19,25 @@ def hello_world():
     return render_template('index.html')
 
 @socketio.on('join_room')
-def joinRoom(roomName):
-    join_room(roomName)
-    emit('welcome', broadcast=True, to=roomName, include_self=False)
+def joinRoom(data):
+    join_room(data['roomName'])
+    emit('welcome',data['userID'], broadcast=True, to=data['roomName'], include_self=False)
     return
 
 # Work after somone in
 @socketio.on('offer')
-def sendOffer(offer,roomName):
-    emit('offer', offer, broadcast=True, to=roomName, include_self=False)
+def sendOffer(data,roomName):
+    emit('offer', data, broadcast=True, to=roomName, include_self=False)
     return
 
 @socketio.on('answer')
-def asnwer(answer,roomName):
-    emit('answer', answer, broadcast=True, to=roomName, include_self=False)
+def asnwer(data,roomName):
+    emit('answer', data, broadcast=True, to=roomName, include_self=False)
     return
 
 @socketio.on('ice')
-def ice(ice,roomName):
-    # print(ice) # Detection - Test
-    emit('ice', ice, broadcast=True, to=roomName, include_self=False)
+def ice(data,roomName):
+    emit('ice', data, broadcast=True, to=roomName, include_self=False)
     return
 
 # TTS Data receive
