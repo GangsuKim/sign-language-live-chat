@@ -11,6 +11,11 @@
  - TTS 데이터 표시 화면 구현
  - 닉네임 구현
 
+## install libs
+ - pyngrok [conda install -c conda-forge pyngrok]
+ - flask_socketio [conda install -c conda-forge flask-socketio]
+ - flask [conda install -c anaconda flask]
+ 
 ## 개인 메모
  - RTC는 1 대 1 로 새롭게 만들어야 한다.
  - 현재 문제점, New user가 오면 HOST만 새로운 유저를 인식한다
