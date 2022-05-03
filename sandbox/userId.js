@@ -1,5 +1,7 @@
 console.log(generateUserID());
 
+hello = new Object();
+
 function generateUserID() {
     let date = new Date();
     const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
