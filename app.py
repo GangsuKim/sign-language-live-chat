@@ -1,13 +1,12 @@
-from dataclasses import replace
-from email.mime import image
+# from dataclasses import replace
+# from email.mime import image
 from flask import Flask,render_template  # 서버 구현을 위한 Flask 객체 import
-from flask_restx import Api, Resource # Api 구현을 위한 Api 객체 import
-from numpy import broadcast  
-from pyngrok import conf, ngrok
+# from numpy import broadcast  
+# from pyngrok import conf, ngrok
 from flask_socketio import SocketIO, join_room, emit
 import base64
 from datetime import datetime
-import os
+# import os
 
 # users = []
 
