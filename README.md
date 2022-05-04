@@ -15,6 +15,7 @@
  - pyngrok [conda install -c conda-forge pyngrok]
  - flask_socketio [conda install -c conda-forge flask-socketio]
  - flask [conda install -c anaconda flask]
+ - ngrok [conda install -c conda-forge pyngrok]
  
 ## 개인 메모
  - RTC는 1 대 1 로 새롭게 만들어야 한다.
