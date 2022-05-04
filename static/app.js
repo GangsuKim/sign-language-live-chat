@@ -65,7 +65,7 @@ async function getMeida(deviceId) {
     try {
         myStream = await navigator.mediaDevices.getUserMedia(
             deviceId ? cameraConstreins : initialConstreins
-        );
+        )
 
         myFace.srcObject = myStream;
         if (!deviceId) {
@@ -170,7 +170,7 @@ socket.on("welcome", async (senderID) => { // Other Connection // [R-1] from 'jo
 
 socket.on("offer", async (data) => { // B
     console.log("Recevied offer");
-    console.log(data['userID']);
+    // console.log(data['userID']);
     myPeerConnection[data['userID']].setRemoteDescription(data['offer']);
     const answer = await myPeerConnection[data['userID']].createAnswer();
     myPeerConnection[data['userID']].setLocalDescription(answer);
@@ -185,11 +185,11 @@ socket.on("answer", (data) => { // A
 
 socket.on("ice", data => {
     console.log("Recevied Candidate");
+    // console.log(data);
     myPeerConnection[data['userID']].addIceCandidate(data['ice']);
 })
 
 // RTC
-
 function makeConnection(senderID) { // [RTC] DONE EDIT
     myPeerConnection[senderID] = new RTCPeerConnection({
         iceServers: [{
@@ -202,14 +202,16 @@ function makeConnection(senderID) { // [RTC] DONE EDIT
             ],
         },],
     }); // Create p2p 
-    myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
+    myPeerConnection[senderID].addEventListener("icecandidate", (data) => {
+        handleIce(data,senderID);
+    });
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
 
-function handleIce(data) {
+function handleIce(data,senderID) {
     console.log("Sent Candidate");
-    socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
+    socket.emit("ice", { ice:data.candidate, userID:senderID }, roomName);
 }
 
 
