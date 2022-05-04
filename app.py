@@ -2,11 +2,10 @@
 # from email.mime import image
 from flask import Flask,render_template  # 서버 구현을 위한 Flask 객체 import
 # from numpy import broadcast  
-from pyngrok import ngrok ,conf 
+from pyngrok import ngrok ,conf # 외부 접속 링크 생성
 from flask_socketio import SocketIO, join_room, emit
 import base64
 from datetime import datetime
-import os, sys
 # import os
 
 # users = []
