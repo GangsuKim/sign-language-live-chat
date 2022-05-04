@@ -2,10 +2,11 @@
 # from email.mime import image
 from flask import Flask,render_template  # 서버 구현을 위한 Flask 객체 import
 # from numpy import broadcast  
-# from pyngrok import conf, ngrok
+from pyngrok import ngrok ,conf 
 from flask_socketio import SocketIO, join_room, emit
 import base64
 from datetime import datetime
+import os, sys
 # import os
 
 # users = []
@@ -15,6 +16,12 @@ socketio = SocketIO(app, cors_allowed_origins='*')
 
 @app.route("/")
 def hello_world():
+    conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
+    http_tunnel = ngrok.connect(5000)
+    tunnels = ngrok.get_tunnels()
+
+    for kk in tunnels:
+        print(kk)
     return render_template('index.html')
 
 @socketio.on('join_room')
