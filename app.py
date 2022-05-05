@@ -1,5 +1,6 @@
 # from dataclasses import replace
 # from email.mime import image
+from http import server
 from flask import Flask,render_template  # 서버 구현을 위한 Flask 객체 import
 # from numpy import broadcast  
 from pyngrok import ngrok ,conf # 외부 접속 링크 생성
@@ -10,17 +11,24 @@ from datetime import datetime
 
 # users = []
 
+serverActive = False
+
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins='*')
 
 @app.route("/")
 def hello_world():
-    conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
-    http_tunnel = ngrok.connect(5000)
-    tunnels = ngrok.get_tunnels()
+    global serverActive
+    if not serverActive:
+        conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
+        http_tunnel = ngrok.connect(5000)
+        tunnels = ngrok.get_tunnels()
 
-    for kk in tunnels:
-        print(kk)
+        for kk in tunnels:
+            print(kk)
+
+        serverActive = True
+
     return render_template('index.html')
 
 @socketio.on('join_room')
