@@ -158,19 +158,21 @@ async function handleWelcomeSubmit(event) { // Join Btn click
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection
 
-socket.on("welcome", async (senderID) => { // Other Connection // [R-1] from 'join_room'
+socket.on("welcome", async (senderID) => { // new person joined // [R-1] from 'join_room'
     makeConnection(senderID);
     console.log(senderID);
     const offer = await myPeerConnection[senderID].createOffer();
     myPeerConnection[senderID].setLocalDescription(offer);
     console.log("Sent offer");
     console.log(myPeerConnection[senderID]);
-    socket.emit("offer", {offer:offer, userID: senderID}, roomName);
+    socket.emit("offer", {offer:offer, userID: userId}, roomName);
 });
 
-socket.on("offer", async (data) => { // B
+socket.on("offer", async (data) => { // offer from exist users
     console.log("Recevied offer");
-    // console.log(data['userID']);
+    if(myPeerConnection[data['userID']] === undefined) {
+        makeConnection(data['userID']);
+    }
     myPeerConnection[data['userID']].setRemoteDescription(data['offer']);
     const answer = await myPeerConnection[data['userID']].createAnswer();
     myPeerConnection[data['userID']].setLocalDescription(answer);
@@ -178,8 +180,10 @@ socket.on("offer", async (data) => { // B
     console.log("Sent the answer");
 })
 
-socket.on("answer", (data) => { // A
+socket.on("answer", (data) => { // answer from new user
     console.log("Recevied the answer");
+    console.log(data);
+    // console.log(data['userID']);
     myPeerConnection[data['userID']].setRemoteDescription(data['answer']);
 });
 
@@ -202,9 +206,7 @@ function makeConnection(senderID) { // [RTC] DONE EDIT
             ],
         },],
     }); // Create p2p 
-    myPeerConnection[senderID].addEventListener("icecandidate", (data) => {
-        handleIce(data,senderID);
-    });
+    myPeerConnection[senderID].addEventListener("icecandidate", (data) => {handleIce(data,userId);});
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
