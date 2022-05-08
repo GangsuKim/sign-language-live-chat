@@ -83,17 +83,14 @@ async function getMeida(deviceId) {
 }
 
 function handleMuteClick() {
-    // myStream.getAudioTracks().forEach((track) => (track.enabled = !track.enabled));
     myStream.getAudioTracks().forEach((track) => (track.enabled = (track.enabled) ? false : true));
     const micIcon = muteBtn.getElementsByTagName('i')[0];
 
     if (!muted) {
-        // muteBtn.innerHTML = "Unmute";
         micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
         muted = true;
         stopReco();
     } else {
-        // muteBtn.innerHTML = "Mute"
         micIcon.setAttribute('class', 'bi bi-mic-fill');
         muted = false;
         startReco();
@@ -155,12 +152,12 @@ async function handleWelcomeSubmit(event) { // Join Btn click
     event.preventDefault();
     const inputRoomName = welcome.querySelector('#inputRoomName');
     const inputUserName = welcome.querySelector('#inputUserName');
-    await intiCall();
-    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: inputUserName.value}); // [S-1]
-    roomName = inputRoomName.value; // 방의 이름을 변수에 저장
     userName = inputUserName.value; // Save user name to let
-    inputRoomName.value = "";
     inputUserName.value = "";
+    await intiCall();
+    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: userName}); // [S-1]
+    roomName = inputRoomName.value; // 방의 이름을 변수에 저장
+    inputRoomName.value = "";
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection
@@ -171,7 +168,6 @@ socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_
     const offer = await myPeerConnection[data['userID']].createOffer();
     myPeerConnection[data['userID']].setLocalDescription(offer);
     console.log("Sent offer");
-    // console.log(myPeerConnection[senderID]);
     socket.emit("offer", {offer:offer, userID: userId, userName: userName}, roomName);
 });
 
@@ -187,17 +183,14 @@ socket.on("offer", async (data) => { // offer from exist users
     console.log("Sent the answer");
 })
 
-socket.on("answer", (data) => { // answer from new user
+socket.on("answer", async (data) => { // answer from new user
     console.log("Recevied the answer");
-    console.log(data);
-    // console.log(data['userID']);
-    myPeerConnection[data['userID']].setRemoteDescription(data['answer']);
+    await myPeerConnection[data['userID']].setRemoteDescription(data['answer']);
 });
 
-socket.on("ice", data => {
+socket.on("ice", async (data) => {
     console.log("Recevied Candidate");
-    // console.log(data);
-    myPeerConnection[data['userID']].addIceCandidate(data['ice']);
+    await myPeerConnection[data['userID']].addIceCandidate(data['ice']);
 });
 
 // User Left from room
@@ -224,7 +217,7 @@ function makeConnection(senderID,userName) {
                 "stun:stun4.l.google.com:19302",
             ],
         },],
-    }); // Create p2p 
+    }); 
     myPeerConnection[senderID]['userID'] = senderID;
     myPeerConnection[senderID]['userName'] = userName;
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
@@ -239,8 +232,6 @@ function handleIce(data) {
 
 
 function handleAddStrean(data) {
-    // console.log(data.stream);
-
     const video = document.createElement('video');
     video.setAttribute('class', 'peerFace');
     video.setAttribute('id', this['userID']);
@@ -250,16 +241,6 @@ function handleAddStrean(data) {
     video.srcObject = data.stream;
     call.appendChild(video);
 }
-
-// myPeerConnection.addEventListener("track", handleTrack);
-
-// function handleTrack(data) {
-//     console.log(data)
-//     console.log("handle track")
-//     // const peerFace = document.querySelector("#" + data.streams.id);
-//     const peerFace = document.querySelector("#peerFace");
-//     peerFace.srcObject = data.streams[0]
-// }
 
 // TTS 
 var printedData = '';
@@ -279,12 +260,6 @@ socket.on("streamTTS", data => {
     }
 });
 
-// function generateUserID() {
-//     let date = new Date();
-//     const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
-//     var hash = CryptoJS.SHA256(userString);
-//     socket.emit('requestMyID');
-// }
 // Video to Photo
 const canvas = document.getElementById('canvas');
 const photo = document.getElementById('photo');
