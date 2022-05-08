@@ -83,17 +83,14 @@ async function getMeida(deviceId) {
 }
 
 function handleMuteClick() {
-    // myStream.getAudioTracks().forEach((track) => (track.enabled = !track.enabled));
     myStream.getAudioTracks().forEach((track) => (track.enabled = (track.enabled) ? false : true));
     const micIcon = muteBtn.getElementsByTagName('i')[0];
 
     if (!muted) {
-        // muteBtn.innerHTML = "Unmute";
         micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
         muted = true;
         stopReco();
     } else {
-        // muteBtn.innerHTML = "Mute"
         micIcon.setAttribute('class', 'bi bi-mic-fill');
         muted = false;
         startReco();
@@ -171,7 +168,6 @@ socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_
     const offer = await myPeerConnection[data['userID']].createOffer();
     myPeerConnection[data['userID']].setLocalDescription(offer);
     console.log("Sent offer");
-    // console.log(myPeerConnection[senderID]);
     socket.emit("offer", {offer:offer, userID: userId, userName: userName}, roomName);
 });
 
@@ -221,7 +217,7 @@ function makeConnection(senderID,userName) {
                 "stun:stun4.l.google.com:19302",
             ],
         },],
-    }); // Create p2p 
+    }); 
     myPeerConnection[senderID]['userID'] = senderID;
     myPeerConnection[senderID]['userName'] = userName;
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
@@ -236,8 +232,6 @@ function handleIce(data) {
 
 
 function handleAddStrean(data) {
-    // console.log(data.stream);
-
     const video = document.createElement('video');
     video.setAttribute('class', 'peerFace');
     video.setAttribute('id', this['userID']);
@@ -247,16 +241,6 @@ function handleAddStrean(data) {
     video.srcObject = data.stream;
     call.appendChild(video);
 }
-
-// myPeerConnection.addEventListener("track", handleTrack);
-
-// function handleTrack(data) {
-//     console.log(data)
-//     console.log("handle track")
-//     // const peerFace = document.querySelector("#" + data.streams.id);
-//     const peerFace = document.querySelector("#peerFace");
-//     peerFace.srcObject = data.streams[0]
-// }
 
 // TTS 
 var printedData = '';
@@ -276,12 +260,6 @@ socket.on("streamTTS", data => {
     }
 });
 
-// function generateUserID() {
-//     let date = new Date();
-//     const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
-//     var hash = CryptoJS.SHA256(userString);
-//     socket.emit('requestMyID');
-// }
 // Video to Photo
 const canvas = document.getElementById('canvas');
 const photo = document.getElementById('photo');
