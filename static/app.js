@@ -187,17 +187,14 @@ socket.on("offer", async (data) => { // offer from exist users
     console.log("Sent the answer");
 })
 
-socket.on("answer", (data) => { // answer from new user
+socket.on("answer", async (data) => { // answer from new user
     console.log("Recevied the answer");
-    console.log(data);
-    // console.log(data['userID']);
-    myPeerConnection[data['userID']].setRemoteDescription(data['answer']);
+    await myPeerConnection[data['userID']].setRemoteDescription(data['answer']);
 });
 
-socket.on("ice", data => {
+socket.on("ice", async (data) => {
     console.log("Recevied Candidate");
-    // console.log(data);
-    myPeerConnection[data['userID']].addIceCandidate(data['ice']);
+    await myPeerConnection[data['userID']].addIceCandidate(data['ice']);
 });
 
 // User Left from room
