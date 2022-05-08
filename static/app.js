@@ -159,11 +159,11 @@ welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new con
 
 socket.on("welcome", async (senderID) => { // new person joined // [R-1] from 'join_room'
     makeConnection(senderID);
-    console.log(senderID);
+    console.log('New user join : ' + senderID);
     const offer = await myPeerConnection[senderID].createOffer();
     myPeerConnection[senderID].setLocalDescription(offer);
     console.log("Sent offer");
-    console.log(myPeerConnection[senderID]);
+    // console.log(myPeerConnection[senderID]);
     socket.emit("offer", {offer:offer, userID: userId}, roomName);
 });
 
@@ -188,9 +188,14 @@ socket.on("answer", (data) => { // answer from new user
 
 socket.on("ice", data => {
     console.log("Recevied Candidate");
-    // console.log(data);
+    console.log(data);
     myPeerConnection[data['userID']].addIceCandidate(data['ice']);
-})
+});
+
+// Disconnecting
+socket.on("userLeft", function() {
+    console.log('userLeft');
+});
 
 // RTC
 function makeConnection(senderID) { 
@@ -206,14 +211,14 @@ function makeConnection(senderID) {
         },],
     }); // Create p2p 
     myPeerConnection[senderID]['userID'] = senderID;
-    myPeerConnection[senderID].addEventListener("icecandidate", (data) => {handleIce(data,userId);});
+    myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
 
-function handleIce(data,senderID) {
+function handleIce(data) {
     console.log("Sent Candidate");
-    socket.emit("ice", { ice:data.candidate, userID:senderID }, roomName);
+    socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
 }
 
 

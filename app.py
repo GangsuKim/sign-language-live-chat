@@ -61,6 +61,7 @@ def getTTS(ttsData,roomName):
 
 @socketio.on('disconnect')
 def disconnecting():
+    emit('userLeft', broadcast=True, include_self=False)
     return
 
 @socketio.on('idConnection')
