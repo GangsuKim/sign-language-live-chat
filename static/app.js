@@ -11,8 +11,6 @@ const call = document.getElementById("call");
 const myNameH1 = document.getElementById('myName');
 const footBar = document.getElementById('footBar');
 
-const userId = generateUserID();
-
 call.hidden = true;
 myNameH1.hidden = true;
 footBar.hidden = true;
@@ -21,8 +19,14 @@ let myStream;
 let muted = false;
 let cameraOff = false;
 let roomName;
+let userName;
 let myPeerConnection = new Object();
-const myID = generateUserID();
+let userId;
+
+socket.on('returnMyId', sid => {
+    userId = CryptoJS.SHA256(sid).toString();
+})
+
 
 async function getCameras() { // 카메라의 목록 불러오기
     try {
@@ -135,7 +139,7 @@ muteBtn.addEventListener("click", handleMuteClick);
 cameraBtn.addEventListener("click", handleCameraClick);
 camerasSelect.addEventListener("input", handleCameraChange);
 
-// Welcome Form
+// Form
 const welcomeForm = welcome.querySelector('form');
 
 async function intiCall() {
@@ -143,35 +147,38 @@ async function intiCall() {
     call.hidden = false;
     footBar.hidden = false;
     await getMeida();
-    makeConnection(userId);
+    makeConnection(userId,userName);
     startReco();
 }
 
 async function handleWelcomeSubmit(event) { // Join Btn click
     event.preventDefault();
-    const input = welcome.querySelector('input');
+    const inputRoomName = welcome.querySelector('#inputRoomName');
+    const inputUserName = welcome.querySelector('#inputUserName');
     await intiCall();
-    socket.emit("join_room", {roomName: input.value, userID: userId}); // [S-1]
-    roomName = input.value; // 방의 이름을 변수에 저장
-    input.value = "";
+    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: inputUserName.value}); // [S-1]
+    roomName = inputRoomName.value; // 방의 이름을 변수에 저장
+    userName = inputUserName.value; // Save user name to let
+    inputRoomName.value = "";
+    inputUserName.value = "";
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection
 
-socket.on("welcome", async (senderID) => { // new person joined // [R-1] from 'join_room'
-    makeConnection(senderID);
-    console.log(senderID);
-    const offer = await myPeerConnection[senderID].createOffer();
-    myPeerConnection[senderID].setLocalDescription(offer);
+socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_room'
+    makeConnection(data['userID'],data['userName']);
+    console.log('New user join : ' + data['userID']);
+    const offer = await myPeerConnection[data['userID']].createOffer();
+    myPeerConnection[data['userID']].setLocalDescription(offer);
     console.log("Sent offer");
-    console.log(myPeerConnection[senderID]);
-    socket.emit("offer", {offer:offer, userID: userId}, roomName);
+    // console.log(myPeerConnection[senderID]);
+    socket.emit("offer", {offer:offer, userID: userId, userName: userName}, roomName);
 });
 
 socket.on("offer", async (data) => { // offer from exist users
     console.log("Recevied offer");
     if(myPeerConnection[data['userID']] === undefined) {
-        makeConnection(data['userID']);
+        makeConnection(data['userID'],data['userName']);
     }
     myPeerConnection[data['userID']].setRemoteDescription(data['offer']);
     const answer = await myPeerConnection[data['userID']].createAnswer();
@@ -191,10 +198,22 @@ socket.on("ice", data => {
     console.log("Recevied Candidate");
     // console.log(data);
     myPeerConnection[data['userID']].addIceCandidate(data['ice']);
-})
+});
+
+// User Left from room
+socket.on("userLeft", function(sid) {
+    const videoFaces = call.querySelectorAll('video');
+    const cryptoSID = CryptoJS.SHA256(sid).toString();
+    videoFaces.forEach(videos => {
+        if (videos['id'] == cryptoSID) {
+            call.removeChild(videos);
+        }
+    });
+    delete myPeerConnection[cryptoSID];
+});
 
 // RTC
-function makeConnection(senderID) { // [RTC] DONE EDIT
+function makeConnection(senderID,userName) { 
     myPeerConnection[senderID] = new RTCPeerConnection({
         iceServers: [{
             urls: [
@@ -206,26 +225,25 @@ function makeConnection(senderID) { // [RTC] DONE EDIT
             ],
         },],
     }); // Create p2p 
-    myPeerConnection[senderID].addEventListener("icecandidate", (data) => {handleIce(data,userId);});
+    myPeerConnection[senderID]['userID'] = senderID;
+    myPeerConnection[senderID]['userName'] = userName;
+    myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
 
-function handleIce(data,senderID) {
+function handleIce(data) {
     console.log("Sent Candidate");
-    socket.emit("ice", { ice:data.candidate, userID:senderID }, roomName);
+    socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
 }
 
 
 function handleAddStrean(data) {
-    // const peerFace = document.getElementById("peerFace");
-    // peerFace.srcObject = data.stream;
-
-    console.log(data.stream);
+    // console.log(data.stream);
 
     const video = document.createElement('video');
     video.setAttribute('class', 'peerFace');
-    video.setAttribute('id', data.stream.id);
+    video.setAttribute('id', this['userID']);
     socket.emit("idConnection", data.stream.id);
     video.setAttribute('autoplay', '');
     video.setAttribute('playsinline', '');
@@ -261,13 +279,12 @@ socket.on("streamTTS", data => {
     }
 });
 
-function generateUserID() {
-    let date = new Date();
-    const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
-    var hash = CryptoJS.SHA256(userString);
-    return hash.toString();
-}
-
+// function generateUserID() {
+//     let date = new Date();
+//     const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
+//     var hash = CryptoJS.SHA256(userString);
+//     socket.emit('requestMyID');
+// }
 // Video to Photo
 const canvas = document.getElementById('canvas');
 const photo = document.getElementById('photo');
