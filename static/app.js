@@ -23,7 +23,7 @@ let myPeerConnection = new Object();
 let userId;
 
 socket.on('returnMyId', sid => {
-    userId = sid;
+    userId = CryptoJS.SHA256(sid).toString();
 })
 
 
@@ -196,10 +196,14 @@ socket.on("ice", data => {
     myPeerConnection[data['userID']].addIceCandidate(data['ice']);
 });
 
-// Disconnecting - Working
+// User Left from room
 socket.on("userLeft", function(sid) {
-    console.log('userLeft');
-    console.log(myPeerConnection[sid])
+    const videoFaces = call.querySelectorAll('video');
+    videoFaces.forEach(videos => {
+        if (videos['id'] == CryptoJS.SHA256(sid).toString()) {
+            call.removeChild(videos);
+        }
+    });
 });
 
 // RTC
