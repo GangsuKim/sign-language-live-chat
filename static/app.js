@@ -199,11 +199,13 @@ socket.on("ice", data => {
 // User Left from room
 socket.on("userLeft", function(sid) {
     const videoFaces = call.querySelectorAll('video');
+    const cryptoSID = CryptoJS.SHA256(sid).toString();
     videoFaces.forEach(videos => {
-        if (videos['id'] == CryptoJS.SHA256(sid).toString()) {
+        if (videos['id'] == cryptoSID) {
             call.removeChild(videos);
         }
     });
+    delete myPeerConnection[cryptoSID];
 });
 
 // RTC
