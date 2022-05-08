@@ -19,6 +19,7 @@ let myStream;
 let muted = false;
 let cameraOff = false;
 let roomName;
+let userName;
 let myPeerConnection = new Object();
 let userId;
 
@@ -138,7 +139,7 @@ muteBtn.addEventListener("click", handleMuteClick);
 cameraBtn.addEventListener("click", handleCameraClick);
 camerasSelect.addEventListener("input", handleCameraChange);
 
-// Welcome Form
+// Form
 const welcomeForm = welcome.querySelector('form');
 
 async function intiCall() {
@@ -146,35 +147,38 @@ async function intiCall() {
     call.hidden = false;
     footBar.hidden = false;
     await getMeida();
-    makeConnection(userId);
+    makeConnection(userId,userName);
     startReco();
 }
 
 async function handleWelcomeSubmit(event) { // Join Btn click
     event.preventDefault();
-    const input = welcome.querySelector('input');
+    const inputRoomName = welcome.querySelector('#inputRoomName');
+    const inputUserName = welcome.querySelector('#inputUserName');
     await intiCall();
-    socket.emit("join_room", {roomName: input.value, userID: userId}); // [S-1]
-    roomName = input.value; // 방의 이름을 변수에 저장
-    input.value = "";
+    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: inputUserName.value}); // [S-1]
+    roomName = inputRoomName.value; // 방의 이름을 변수에 저장
+    userName = inputUserName.value; // Save user name to let
+    inputRoomName.value = "";
+    inputUserName.value = "";
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection
 
-socket.on("welcome", async (senderID) => { // new person joined // [R-1] from 'join_room'
-    makeConnection(senderID);
-    console.log('New user join : ' + senderID);
-    const offer = await myPeerConnection[senderID].createOffer();
-    myPeerConnection[senderID].setLocalDescription(offer);
+socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_room'
+    makeConnection(data['userID'],data['userName']);
+    console.log('New user join : ' + data['userID']);
+    const offer = await myPeerConnection[data['userID']].createOffer();
+    myPeerConnection[data['userID']].setLocalDescription(offer);
     console.log("Sent offer");
     // console.log(myPeerConnection[senderID]);
-    socket.emit("offer", {offer:offer, userID: userId}, roomName);
+    socket.emit("offer", {offer:offer, userID: userId, userName: userName}, roomName);
 });
 
 socket.on("offer", async (data) => { // offer from exist users
     console.log("Recevied offer");
     if(myPeerConnection[data['userID']] === undefined) {
-        makeConnection(data['userID']);
+        makeConnection(data['userID'],data['userName']);
     }
     myPeerConnection[data['userID']].setRemoteDescription(data['offer']);
     const answer = await myPeerConnection[data['userID']].createAnswer();
@@ -209,7 +213,7 @@ socket.on("userLeft", function(sid) {
 });
 
 // RTC
-function makeConnection(senderID) { 
+function makeConnection(senderID,userName) { 
     myPeerConnection[senderID] = new RTCPeerConnection({
         iceServers: [{
             urls: [
@@ -222,6 +226,7 @@ function makeConnection(senderID) {
         },],
     }); // Create p2p 
     myPeerConnection[senderID]['userID'] = senderID;
+    myPeerConnection[senderID]['userName'] = userName;
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));

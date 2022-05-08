@@ -39,7 +39,7 @@ def hello_world():
 @socketio.on('join_room')
 def joinRoom(data):
     join_room(data['roomName'])
-    emit('welcome',data['userID'], broadcast=True, to=data['roomName'], include_self=False)
+    emit('welcome',data, broadcast=True, to=data['roomName'], include_self=False)
     return
 
 # Work after somone in
