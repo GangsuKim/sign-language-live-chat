@@ -20,7 +20,11 @@ let muted = false;
 let cameraOff = false;
 let roomName;
 let myPeerConnection = new Object();
-const userId = generateUserID();
+let userId;
+
+socket.on('returnMyId', sid => {
+    userId = sid;
+})
 
 
 async function getCameras() { // 카메라의 목록 불러오기
@@ -188,13 +192,14 @@ socket.on("answer", (data) => { // answer from new user
 
 socket.on("ice", data => {
     console.log("Recevied Candidate");
-    console.log(data);
+    // console.log(data);
     myPeerConnection[data['userID']].addIceCandidate(data['ice']);
 });
 
-// Disconnecting
-socket.on("userLeft", function() {
+// Disconnecting - Working
+socket.on("userLeft", function(sid) {
     console.log('userLeft');
+    console.log(myPeerConnection[sid])
 });
 
 // RTC
@@ -263,13 +268,12 @@ socket.on("streamTTS", data => {
     }
 });
 
-function generateUserID() {
-    let date = new Date();
-    const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
-    var hash = CryptoJS.SHA256(userString);
-    return hash.toString();
-}
-
+// function generateUserID() {
+//     let date = new Date();
+//     const userString = "" + date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() + navigator.userAgent;
+//     var hash = CryptoJS.SHA256(userString);
+//     socket.emit('requestMyID');
+// }
 // Video to Photo
 const canvas = document.getElementById('canvas');
 const photo = document.getElementById('photo');

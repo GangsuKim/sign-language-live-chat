@@ -1,12 +1,16 @@
 # from dataclasses import replace
 # from email.mime import image
 from http import server
-from flask import Flask,render_template  # 서버 구현을 위한 Flask 객체 import
+import re
+from turtle import delay
+from flask import Flask,render_template,request  # 서버 구현을 위한 Flask 객체 import
 # from numpy import broadcast  
 from pyngrok import ngrok ,conf # 외부 접속 링크 생성
 from flask_socketio import SocketIO, join_room, emit
 import base64
 from datetime import datetime
+
+# from requests import request
 # import os
 
 # users = []
@@ -61,13 +65,15 @@ def getTTS(ttsData,roomName):
 
 @socketio.on('disconnect')
 def disconnecting():
-    emit('userLeft', broadcast=True, include_self=False)
+    # delay(500);
+    emit('userLeft',request.sid, broadcast=True, include_self=False)
     return
 
-@socketio.on('idConnection')
-def getID(userId):
-    # users.append(userId)
+@socketio.on('connect')
+def someoneJoin():
+    emit('returnMyId', request.sid, broadcast=True, include_self=True, to=request.sid)
     return
+
 
 @socketio.on('signImage')
 def signImage(userImage):
