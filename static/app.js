@@ -11,8 +11,6 @@ const call = document.getElementById("call");
 const myNameH1 = document.getElementById('myName');
 const footBar = document.getElementById('footBar');
 
-const userId = generateUserID();
-
 call.hidden = true;
 myNameH1.hidden = true;
 footBar.hidden = true;
@@ -22,7 +20,8 @@ let muted = false;
 let cameraOff = false;
 let roomName;
 let myPeerConnection = new Object();
-const myID = generateUserID();
+const userId = generateUserID();
+
 
 async function getCameras() { // 카메라의 목록 불러오기
     try {
@@ -194,7 +193,7 @@ socket.on("ice", data => {
 })
 
 // RTC
-function makeConnection(senderID) { // [RTC] DONE EDIT
+function makeConnection(senderID) { 
     myPeerConnection[senderID] = new RTCPeerConnection({
         iceServers: [{
             urls: [
@@ -219,10 +218,7 @@ function handleIce(data,senderID) {
 
 
 function handleAddStrean(data) {
-    // const peerFace = document.getElementById("peerFace");
-    // peerFace.srcObject = data.stream;
-
-    console.log(data.stream);
+    // console.log(data.stream);
 
     const video = document.createElement('video');
     video.setAttribute('class', 'peerFace');
