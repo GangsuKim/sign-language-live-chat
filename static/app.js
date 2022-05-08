@@ -155,12 +155,12 @@ async function handleWelcomeSubmit(event) { // Join Btn click
     event.preventDefault();
     const inputRoomName = welcome.querySelector('#inputRoomName');
     const inputUserName = welcome.querySelector('#inputUserName');
-    await intiCall();
-    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: inputUserName.value}); // [S-1]
-    roomName = inputRoomName.value; // 방의 이름을 변수에 저장
     userName = inputUserName.value; // Save user name to let
-    inputRoomName.value = "";
     inputUserName.value = "";
+    await intiCall();
+    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: userName}); // [S-1]
+    roomName = inputRoomName.value; // 방의 이름을 변수에 저장
+    inputRoomName.value = "";
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection
