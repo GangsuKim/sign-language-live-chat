@@ -23,6 +23,7 @@ let userName;
 let myPeerConnection = new Object();
 let userId;
 
+// Get SID from backend
 socket.on('returnMyId', sid => {
     userId = CryptoJS.SHA256(sid).toString();
 })
@@ -98,21 +99,25 @@ function handleMuteClick() {
 }
 
 function handleCameraClick() {
-    myStream.getVideoTracks().forEach((track) => (track.enabled = !track.enabled));
+    myStream.getVideoTracks().forEach((track) => (track.enabled = (track.enabled) ? false : true));
     const cameraIcon = cameraBtn.getElementsByTagName('i')[0];
 
     if (cameraOff) {
+        myStream.getVideoTracks().forEach((track) => (track.enabled = true));
         cameraIcon.setAttribute('class', 'bi bi-camera-video-fill');
         cameraOff = false;
     } else {
+        myStream.getVideoTracks().forEach((track) => (track.enabled = false));
         cameraIcon.setAttribute('class', 'bi bi-camera-video-off-fill');
         cameraOff = true;
     }
 }
 
-// 카메라 전환 시 마이크 표시 문제 해결
-function handleMuteChange() {
+// Solving mic errors when camera change
+function changeOnHandle() {
     const micIcon = muteBtn.getElementsByTagName('i')[0];
+    const cameraIcon = cameraBtn.getElementsByTagName('i')[0];
+
     if (muted) {
         myStream.getAudioTracks().forEach((track) => (track.enabled = false));
         micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
@@ -120,16 +125,24 @@ function handleMuteChange() {
         myStream.getAudioTracks().forEach((track) => (track.enabled = true));
         micIcon.setAttribute('class', 'bi bi-mic-fill');
     }
+
+    if (cameraOff) {
+        myStream.getVideoTracks().forEach((track) => (track.enabled = false));
+        cameraIcon.setAttribute('class', 'bi bi-camera-video-off-fill');
+    } else {
+        myStream.getVideoTracks().forEach((track) => (track.enabled = true));
+        cameraIcon.setAttribute('class', 'bi bi-camera-video-fill');
+    }
 }
 
 async function handleCameraChange() {
     await getMeida(camerasSelect.value); // For my self
-    if (myPeerConnection) { // For other browser
-        const videoTrack = myStream.getVideoTracks()[0];
-        const videoSender = myPeerConnection.getSenders().find(sender => sender.track.kind == "video");
+    const videoTrack = myStream.getVideoTracks()[0];
+    Object.keys(myPeerConnection).forEach(sid => {
+        const videoSender = myPeerConnection[sid].getSenders().find(sender => sender.track.kind == "video");
         videoSender.replaceTrack(videoTrack);
-        handleMuteChange();
-    }
+    });
+    changeOnHandle();
 }
 
 muteBtn.addEventListener("click", handleMuteClick);
@@ -222,6 +235,7 @@ function makeConnection(senderID,userName) {
     myPeerConnection[senderID]['userName'] = userName;
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
+    // myPeerConnection[senderID].addEventListener("track", handleTrack);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
 
@@ -229,7 +243,6 @@ function handleIce(data) {
     console.log("Sent Candidate");
     socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
 }
-
 
 function handleAddStrean(data) {
     const video = document.createElement('video');
@@ -240,6 +253,15 @@ function handleAddStrean(data) {
     video.setAttribute('playsinline', '');
     video.srcObject = data.stream;
     call.appendChild(video);
+}
+
+function handleTrack(data) {
+    // console.log(data)
+    // console.log("handle track")
+    // const peerFace = document.querySelector("#" + data.streams.id);
+    console.log(this);
+    // const peerFace = document.querySelector("#peerFace");
+    // peerFace.srcObject = data.streams[0]
 }
 
 // TTS 
@@ -266,7 +288,7 @@ const photo = document.getElementById('photo');
 const photoBtn = document.getElementById('capImage');
 // const myFace = document.getElementById('myFace'); //myFace
 
-photoBtn.addEventListener("click", capturePhoto);
+// photoBtn.addEventListener("click", capturePhoto);
 
 function capturePhoto() {
     var context = canvas.getContext('2d');
