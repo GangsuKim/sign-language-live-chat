@@ -8,11 +8,10 @@ const camerasSelect = document.getElementById("cameras");
 
 const welcome = document.getElementById("welcome");
 const call = document.getElementById("call");
-const myNameH1 = document.getElementById('myName');
 const footBar = document.getElementById('footBar');
+const myName = document.getElementById('myName');
 
 call.hidden = true;
-myNameH1.hidden = true;
 footBar.hidden = true;
 
 let myStream;
@@ -26,8 +25,7 @@ let userId;
 // Get SID from backend
 socket.on('returnMyId', sid => {
     userId = CryptoJS.SHA256(sid).toString();
-})
-
+});
 
 async function getCameras() { // 카메라의 목록 불러오기
     try {
@@ -167,6 +165,7 @@ async function handleWelcomeSubmit(event) { // Join Btn click
     const inputUserName = welcome.querySelector('#inputUserName');
     userName = inputUserName.value; // Save user name to let
     inputUserName.value = "";
+    myName.innerText = userName;
     await intiCall();
     socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: userName}); // [S-1]
     roomName = inputRoomName.value; // 방의 이름을 변수에 저장
@@ -208,7 +207,7 @@ socket.on("ice", async (data) => {
 
 // User Left from room
 socket.on("userLeft", function(sid) {
-    const videoFaces = call.querySelectorAll('video');
+    const videoFaces = call.querySelectorAll('div[class=videoBgc]');
     const cryptoSID = CryptoJS.SHA256(sid).toString();
     videoFaces.forEach(videos => {
         if (videos['id'] == cryptoSID) {
@@ -244,15 +243,24 @@ function handleIce(data) {
     socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
 }
 
-function handleAddStrean(data) {
+function handleAddStrean(data) { // 20220509 Working
+    const videoBgc = document.createElement('div');
+    videoBgc.setAttribute('class','videoBgc');
+    videoBgc.setAttribute('id', this['userID']);
+    videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
+
     const video = document.createElement('video');
     video.setAttribute('class', 'peerFace');
     video.setAttribute('id', this['userID']);
-    socket.emit("idConnection", data.stream.id);
     video.setAttribute('autoplay', '');
     video.setAttribute('playsinline', '');
     video.srcObject = data.stream;
-    call.appendChild(video);
+
+    videoBgc.appendChild(video)
+
+    socket.emit("idConnection", data.stream.id);
+
+    call.appendChild(videoBgc);
 }
 
 function handleTrack(data) {

@@ -80,32 +80,28 @@ nav {
     cursor: pointer;
 }
 
-#localBgc {
+.videoBgc {
     /* background-color: green; */
     width: 400px;
+    position: relative;
+    display: inline-block;
 }
 
-#localBgc > h1 {
-    position: absolute;
-    text-align: center;
-    width: 400px;
-    line-height: 300px;
+#myName, .userName {
     z-index: 10;
     color: white;
+
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    padding: 5px;
+    background-color: rgba(68, 68, 68, 0.7);
 }
-
-/* #myName {
-    position: absolute;
-    margin: 0 auto;
-
-    color: white;
-    z-index: 10;
-    background-color: green;
-} */
 
 video {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+    z-index: -1;
 }
 
 #myStream {

@@ -9,6 +9,7 @@ from pyngrok import ngrok ,conf # 외부 접속 링크 생성
 from flask_socketio import SocketIO, join_room, emit
 import base64
 from datetime import datetime
+import ssl
 
 # from requests import request
 # import os
