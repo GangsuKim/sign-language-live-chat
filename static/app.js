@@ -206,6 +206,7 @@ function makeConnection(senderID) { // [RTC] DONE EDIT
             ],
         },],
     }); // Create p2p 
+    myPeerConnection[senderID]['userID'] = senderID;
     myPeerConnection[senderID].addEventListener("icecandidate", (data) => {handleIce(data,userId);});
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
@@ -225,7 +226,7 @@ function handleAddStrean(data) {
 
     const video = document.createElement('video');
     video.setAttribute('class', 'peerFace');
-    video.setAttribute('id', data.stream.id);
+    video.setAttribute('id', this['userID']);
     socket.emit("idConnection", data.stream.id);
     video.setAttribute('autoplay', '');
     video.setAttribute('playsinline', '');
