@@ -22,17 +22,16 @@ socketio = SocketIO(app, cors_allowed_origins='*')
 
 @app.route("/")
 def hello_world():
-    # Lockup for Network
-    # global serverActive
-    # if not serverActive:
-    #     conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
-    #     http_tunnel = ngrok.connect(5000)
-    #     tunnels = ngrok.get_tunnels()
+    global serverActive
+    if not serverActive:
+        conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
+        http_tunnel = ngrok.connect(5000)
+        tunnels = ngrok.get_tunnels()
 
-    #     for kk in tunnels:
-    #         print(kk)
+        for kk in tunnels:
+            print(kk)
 
-    #     serverActive = True
+        serverActive = True
 
     return render_template('index.html')
 
