@@ -11,6 +11,9 @@ const call = document.getElementById("call");
 const footBar = document.getElementById('footBar');
 const myName = document.getElementById('myName');
 
+const rightBar = document.getElementById('rightBar');
+
+rightBar.hidden = true;
 call.hidden = true;
 footBar.hidden = true;
 
@@ -170,6 +173,10 @@ async function handleWelcomeSubmit(event) { // Join Btn click
     socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: userName}); // [S-1]
     roomName = inputRoomName.value; // 방의 이름을 변수에 저장
     inputRoomName.value = "";
+
+    // Show chatbox
+    rightBar.style.display = 'flex';
+    rightBar.hidden = false;
 }
 
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection

@@ -55,11 +55,25 @@
             <div id="rightTopBar"></div>
 
             <div id="chatBox">
-                이것은 텍스트 입니다
+                <div style="height: 10px"></div>
+                <!-- 
+                <div class="myChatBox">
+                    <span id="myNameOnChat">김강수</span><br>
+                    <span id="textArea">안녕</span>
+                </div>
+                -->
+
+                <!-- <div class="receiveChatBox">
+                    <span id="myNameOnChat">김강수</span><br>
+                    <span id="textArea">안녕</span>
+                </div> -->
             </div>
 
             <div id="chatInputDiv">
-                <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
+                <form id="chatForm">
+                    <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
+                    <input type="submit" id="sendChat" value="전송">
+                </form>
             </div>
         </div>
 
@@ -87,6 +101,7 @@
     <script src="/static/app.js"></script>
     <script src="/static/js/tts.js"></script>
     <script src="/static/js/userId.js"></script>
+    <script src="/static/js/chats.js"></script>
 </body>
 
 </html>

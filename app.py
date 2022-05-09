@@ -2,6 +2,7 @@
 # from email.mime import image
 from http import server
 import re
+from socket import socket
 from turtle import delay
 from flask import Flask,render_template,request  # 서버 구현을 위한 Flask 객체 import
 # from numpy import broadcast  
@@ -76,6 +77,10 @@ def someoneJoin():
     emit('returnMyId', request.sid, broadcast=True, include_self=True, to=request.sid)
     return
 
+@socketio.on('user_message')
+def userMessage(data,roomName):
+    emit('user_message_from', data, broadcast=True, to=roomName, include_self=False)
+    return
 
 @socketio.on('signImage')
 def signImage(userImage):
