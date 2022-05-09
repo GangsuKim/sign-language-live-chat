@@ -13,6 +13,7 @@
 
 ## 문제사항
  - Ngrok를 통한 외부망 배포시 RTCPeer를 이용한 화상통화가 안됨
+ - TCP (내부망) 통신일때는 정상적으로 작동하나, UDP 통신 시에 작동이 안됨
 
 ## install libs
  - pyngrok [conda install -c conda-forge pyngrok]
