@@ -242,7 +242,7 @@ function makeConnection(senderID,userName) {
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
     myPeerConnection[senderID].addEventListener("connectionstatechange", onConnectChange);
-    // myPeerConnection[senderID].addEventListener("track", handleTrack);
+    myPeerConnection[senderID].addEventListener("track", handleTrack);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
 
@@ -252,32 +252,58 @@ function handleIce(data) {
 }
 
 function handleAddStrean(data) { // 20220509 Working
-    const videoBgc = document.createElement('div');
-    videoBgc.setAttribute('class','videoBgc');
-    videoBgc.setAttribute('id', this['userID']);
-    videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
+    // const videoBgc = document.createElement('div');
+    // videoBgc.setAttribute('class','videoBgc');
+    // videoBgc.setAttribute('id', this['userID']);
+    // videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
 
-    const video = document.createElement('video');
-    video.setAttribute('class', 'peerFace');
-    video.setAttribute('id', this['userID']);
-    video.setAttribute('autoplay', '');
-    video.setAttribute('playsinline', '');
-    video.srcObject = data.stream;
+    // const video = document.createElement('video');
+    // video.setAttribute('class', 'peerFace');
+    // video.setAttribute('id', this['userID']);
+    // video.setAttribute('autoplay', '');
+    // video.setAttribute('playsinline', '');
+    // video.srcObject = data.stream;
 
-    videoBgc.appendChild(video)
+    // videoBgc.appendChild(video)
 
     socket.emit("idConnection", data.stream.id);
 
-    call.appendChild(videoBgc);
+    // call.appendChild(videoBgc);
 }
 
 function handleTrack(data) {
-    // console.log(data)
-    // console.log("handle track")
-    // const peerFace = document.querySelector("#" + data.streams.id);
-    console.log(this);
-    // const peerFace = document.querySelector("#peerFace");
-    // peerFace.srcObject = data.streams[0]
+    console.log("handle track")
+    // const face = document.querySelector('video[id=' + this['userID'] + ']');
+    // face.srcObject = data.streams[0];
+
+    // const isExist = !!document.querySelector('video[id=' + this['userID'] + ']');
+    let work = true;
+    const videos =  document.getElementsByTagName('video');
+
+    if(videos.length != 1) {
+        videos.forEach(video => {
+            if(video.id == this['userID']) {
+                work = false;
+            }
+        });
+    }
+
+    if(work) {
+        const videoBgc = document.createElement('div');
+        videoBgc.setAttribute('class','videoBgc');
+        videoBgc.setAttribute('id', this['userID']);
+        videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
+    
+        const video = document.createElement('video');
+        video.setAttribute('class', 'peerFace');
+        video.setAttribute('id', this['userID']);
+        video.setAttribute('autoplay', '');
+        video.setAttribute('playsinline', '');
+        video.srcObject = data.streams[0];
+    
+        videoBgc.appendChild(video);
+        call.appendChild(videoBgc);
+    }
 }
 
 // TTS 
