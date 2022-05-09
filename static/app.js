@@ -308,24 +308,6 @@ function handleTrack(data) {
     }
 }
 
-// TTS 
-var printedData = '';
-var regex = / /gi;
-const ttsDiv = document.getElementById('ttsDiv');
-
-var pastData = '';
-
-socket.on("streamTTS", data => {
-    if (pastData !== data) {
-        var pEle = document.createElement('p');
-        pEle.innerHTML = data;
-        ttsDiv.append(pEle);
-
-        console.log(data);
-        pastData = data;
-    }
-});
-
 // Video to Photo
 const canvas = document.getElementById('canvas');
 const photo = document.getElementById('photo');

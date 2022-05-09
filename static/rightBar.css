@@ -120,6 +120,10 @@
     text-align: left;
 }
 
+.ttsBG {
+    background-color: rgb(55, 55, 185);
+}
+
 .statusMessage {
     height: 25px;
     background-color: rgb(240, 240, 240);

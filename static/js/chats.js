@@ -26,11 +26,16 @@ function appendMyChat(text) {
     myChatBoxDiv.scrollIntoView();
 }
 
-function appendReceiveUserChat(data) {
+function appendReceiveUserChat(data, status = 'normal') {
     const receiveChatBoxDiv = document.createElement('div');
     receiveChatBoxDiv.setAttribute('class','receiveChatBox')
     receiveChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + data['userName'] + '</span><br>';
-    receiveChatBoxDiv.innerHTML += '<span id="textArea">' + data['userText'] + '</span>';
+    
+    if (status == 'tts') {
+        receiveChatBoxDiv.innerHTML += '<span id="textArea" class="ttsBG">🗣️' + data['userText'] + '</span>';
+    } else {
+        receiveChatBoxDiv.innerHTML += '<span id="textArea">' + data['userText'] + '</span>';
+    }
 
     document.getElementById('chatBox').appendChild(receiveChatBoxDiv);
     receiveChatBoxDiv.scrollIntoView();
@@ -53,3 +58,14 @@ function userStateChange(name,state) {
     document.getElementById('chatBox').appendChild(stateDiv);
     stateDiv.scrollIntoView();
 }
+
+// TTS 
+const ttsDiv = document.getElementById('ttsDiv');
+var pastData = '';
+
+socket.on("streamTTS", data => {
+    if (pastData !== data) {
+        appendReceiveUserChat(data,'tts');
+        pastData = data;
+    }
+});
