@@ -23,6 +23,7 @@ function appendMyChat(text) {
     myChatBoxDiv.innerHTML += '<span id="textArea">' + text + '</span>';
 
     document.getElementById('chatBox').appendChild(myChatBoxDiv);
+    myChatBoxDiv.scrollIntoView();
 }
 
 function appendReceiveUserChat(data) {
@@ -32,6 +33,7 @@ function appendReceiveUserChat(data) {
     receiveChatBoxDiv.innerHTML += '<span id="textArea">' + data['userText'] + '</span>';
 
     document.getElementById('chatBox').appendChild(receiveChatBoxDiv);
+    receiveChatBoxDiv.scrollIntoView();
 }
 
 socket.on("user_message_from", async (data) => {
