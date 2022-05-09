@@ -55,7 +55,7 @@ def asnwer(data,roomName):
 
 @socketio.on('ice')
 def ice(data,roomName):
-    # print(data) # for Debug
+    print(data) # for Debug
     emit('ice', data, broadcast=True, to=roomName, include_self=False)
     return
 
