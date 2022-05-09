@@ -234,6 +234,7 @@ function makeConnection(senderID,userName) {
     myPeerConnection[senderID]['userName'] = userName;
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
     myPeerConnection[senderID].addEventListener("addstream", handleAddStrean);
+    myPeerConnection[senderID].addEventListener("connectionstatechange", onConnectChange);
     // myPeerConnection[senderID].addEventListener("track", handleTrack);
     myStream.getTracks().forEach(track => myPeerConnection[senderID].addTrack(track, myStream));
 }
@@ -312,3 +313,16 @@ function capturePhoto() {
 }
 
 // setInterval(capturePhoto, 20); // 무한촬영
+
+// User left at safari or other browsers
+function onConnectChange(event) {
+    const videoFaces = call.querySelectorAll('div[class=videoBgc]');
+    if (this.connectionState == 'disconnected' || this.connectionState == 'failed') {
+        videoFaces.forEach(videos => {
+            if (videos['id'] == this['userID']) {
+                call.removeChild(videos);
+            }
+        });
+        delete myPeerConnection[this['userID']];
+    }
+}

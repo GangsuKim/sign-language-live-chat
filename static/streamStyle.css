@@ -1,4 +1,4 @@
-* {
+    * {
     margin: 0;
     padding: 0;
 }
@@ -83,8 +83,10 @@ nav {
 .videoBgc {
     /* background-color: green; */
     width: 400px;
+    height: 300px;
     position: relative;
     display: inline-block;
+    background-color: black;
 }
 
 #myName, .userName {
@@ -102,6 +104,8 @@ video {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
     z-index: -1;
+
+    height: 300px;
 }
 
 #myStream {
