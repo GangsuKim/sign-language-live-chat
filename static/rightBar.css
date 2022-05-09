@@ -119,3 +119,12 @@
     margin-top: 3px;
     text-align: left;
 }
+
+.statusMessage {
+    height: 25px;
+    background-color: rgb(240, 240, 240);
+    text-align: center;
+    line-height: 25px;
+    margin: 5px 20px;
+    border-radius: 20px;
+}

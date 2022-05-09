@@ -187,6 +187,7 @@ socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_
     const offer = await myPeerConnection[data['userID']].createOffer();
     myPeerConnection[data['userID']].setLocalDescription(offer);
     console.log("Sent offer");
+    userStateChange(data['userName'], 'join')
     socket.emit("offer", {offer:offer, userID: userId, userName: userName}, roomName);
 });
 
@@ -219,6 +220,7 @@ socket.on("userLeft", function(sid) {
     videoFaces.forEach(videos => {
         if (videos['id'] == cryptoSID) {
             call.removeChild(videos);
+            userStateChange(myPeerConnection[cryptoSID]['userName'], 'left');
         }
     });
     delete myPeerConnection[cryptoSID];
@@ -354,6 +356,7 @@ function onConnectChange(event) {
         videoFaces.forEach(videos => {
             if (videos['id'] == this['userID']) {
                 call.removeChild(videos);
+                userStateChange(this['userName'], 'left');
             }
         });
         delete myPeerConnection[this['userID']];

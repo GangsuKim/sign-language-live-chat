@@ -39,3 +39,17 @@ function appendReceiveUserChat(data) {
 socket.on("user_message_from", async (data) => {
     appendReceiveUserChat(data);
 });
+
+function userStateChange(name,state) {
+    const stateDiv = document.createElement('div')
+    stateDiv.setAttribute('class','statusMessage');
+
+    if(state == 'join') {
+        stateDiv.innerText = name + '님이 들어왔습니다.';
+    } else if (state == 'left'){
+        stateDiv.innerText = name + '님이 나갔습니다.';
+    }
+
+    document.getElementById('chatBox').appendChild(stateDiv);
+    stateDiv.scrollIntoView();
+}
