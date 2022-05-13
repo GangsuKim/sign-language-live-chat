@@ -18,7 +18,6 @@
  - Ngrok를 통한 외부망 배포시 RTCPeer를 이용한 화상통화가 안됨
  - TCP (내부망) 통신일때는 정상적으로 작동하나, UDP 통신 시에 작동이 안됨
  - STUN 서버가 아닌 TURN 서버를 이용해야 하는 것 같다
- - TURN 서버는 무료가 거의 없다 = 만들어야 한다 <- JOTDAM
 
 ## install libs
  - pyngrok [conda install -c conda-forge pyngrok]
