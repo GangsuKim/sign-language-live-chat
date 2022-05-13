@@ -210,7 +210,10 @@ socket.on("answer", async (data) => { // answer from new user
 
 socket.on("ice", async (data) => {
     console.log("Recevied Candidate");
-    await myPeerConnection[data['userID']].addIceCandidate(data['ice']);
+    if(myPeerConnection[data['userID']]['iceConnectionState'] != 'connected') {
+        console.log('Add ice to ' + data.userID);
+        await myPeerConnection[data['userID']].addIceCandidate(data['ice']);
+    }
 });
 
 // User Left from room
@@ -249,7 +252,7 @@ function makeConnection(senderID,userName) {
 }
 
 function handleIce(data) {
-    console.log("Sent Candidate");
+    console.log("Sent ICE");
     socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
 }
 
@@ -268,8 +271,6 @@ function handleAddStrean(data) { // 20220509 Working
 
     // videoBgc.appendChild(video)
 
-    socket.emit("idConnection", data.stream.id);
-
     // call.appendChild(videoBgc);
 }
 
@@ -284,7 +285,7 @@ function handleTrack(data) {
 
     if(videos.length != 1) {
         videos.forEach(video => {
-            if(video.id == this['userID']) {
+            if(video.id == this['userID'] && video.length == myPeerConnection.length) {
                 work = false;
             }
         });
@@ -341,6 +342,7 @@ function onConnectChange(event) {
                 userStateChange(this['userName'], 'left');
             }
         });
+        // console.log(this.connectionState);
         delete myPeerConnection[this['userID']];
     }
 }
