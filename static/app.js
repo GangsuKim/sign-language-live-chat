@@ -315,7 +315,7 @@ const photo = document.getElementById('photo');
 const photoBtn = document.getElementById('capImage');
 // const myFace = document.getElementById('myFace'); //myFace
 
-// photoBtn.addEventListener("click", capturePhoto);
+photoBtn.addEventListener("click", capturePhoto);
 
 function capturePhoto() {
     var context = canvas.getContext('2d');
