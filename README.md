@@ -5,11 +5,11 @@
  - 1:1 실시간 화상 채팅
  - 실시간 화상 저장
  - 닉네임 구현
+ - Text 채팅창 구현 (UI + Function)
+ - TTS 데이터 표시 화면 구현 (UI)
 
 ## 개발 목표
  - 1:N 화상 회의 구현 (Function)
- - Text 채팅창 구현 (UI + Function)
- - TTS 데이터 표시 화면 구현 (UI)
 
 ## 주의
  - Link를 통한 접속은 같은 네트워크 내에서만 가능하다.
@@ -18,7 +18,6 @@
  - Ngrok를 통한 외부망 배포시 RTCPeer를 이용한 화상통화가 안됨
  - TCP (내부망) 통신일때는 정상적으로 작동하나, UDP 통신 시에 작동이 안됨
  - STUN 서버가 아닌 TURN 서버를 이용해야 하는 것 같다
- - TURN 서버는 무료가 거의 없다 = 만들어야 한다 <- JOTDAM
 
 ## install libs
  - pyngrok [conda install -c conda-forge pyngrok]
