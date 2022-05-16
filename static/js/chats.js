@@ -1,6 +1,8 @@
 const chatForm = document.getElementById('chatForm');
 const userChat = document.getElementById('userChat');
 
+let lastSender;
+
 chatForm.addEventListener('submit', (event) => {
     event.preventDefault();
     appendMyChat(userChat.value);
@@ -10,6 +12,11 @@ chatForm.addEventListener('submit', (event) => {
 userChat.addEventListener('keydown', (event) => {
     if (event.keyCode == 13) {
         event.preventDefault();
+
+        if(userChat.value === '') {
+            return;
+        }
+
         document.getElementById('sendChat').click();
     }
 });
@@ -22,17 +29,22 @@ function appendMyChat(text) {
 
     const myChatBoxDiv = document.createElement('div');
     myChatBoxDiv.setAttribute('class', 'myChatBox')
-    myChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + userName + '</span><br>';
+    if(lastSender != 'ME') {
+        myChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + userName + '</span><br>';
+    }
     myChatBoxDiv.innerHTML += '<span id="textArea">' + text + '</span>';
 
     document.getElementById('chatBox').appendChild(myChatBoxDiv);
     myChatBoxDiv.scrollIntoView();
+    lastSender = 'ME';
 }
 
 function appendReceiveUserChat(data, status = 'normal') {
     const receiveChatBoxDiv = document.createElement('div');
     receiveChatBoxDiv.setAttribute('class', 'receiveChatBox')
-    receiveChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + data['userName'] + '</span><br>';
+    if(lastSender != data['userName']) {
+        receiveChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + data['userName'] + '</span><br>';
+    }
 
     if (status == 'tts') {
         receiveChatBoxDiv.innerHTML += '<span id="textArea" class="ttsBG">🗣️' + data['userText'] + '</span>';
@@ -42,6 +54,7 @@ function appendReceiveUserChat(data, status = 'normal') {
 
     document.getElementById('chatBox').appendChild(receiveChatBoxDiv);
     receiveChatBoxDiv.scrollIntoView();
+    lastSender = data['userName'];
 }
 
 socket.on("user_message_from", async (data) => {
@@ -62,15 +75,15 @@ function userStateChange(name, state) {
     stateDiv.scrollIntoView();
 }
 
-// TTS 
+// TTS to Chat
 const ttsDiv = document.getElementById('ttsDiv');
 var pastData = '';
 
 socket.on("streamTTS", data => {
     if (pastData !== data) {
-        if (data['userName'] == userName) {
+        if (data['userName'] == userName) { // Show TTS text box for my self
             appendMyChat('🗣️' + data['userText']);
-        } else {
+        } else { // Show TTS text box from others
             appendReceiveUserChat(data, 'tts');
         }
         pastData = data;
