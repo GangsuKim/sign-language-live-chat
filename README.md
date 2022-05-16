@@ -20,10 +20,9 @@
  - STUN 서버가 아닌 TURN 서버를 이용해야 하는 것 같다
 
 ## install libs
- - pyngrok [conda install -c conda-forge pyngrok]
- - flask_socketio [conda install -c conda-forge flask-socketio]
- - flask [conda install -c anaconda flask]
- - ngrok [conda install -c conda-forge pyngrok]
+conda install -c conda-forge pyngrok  
+conda install -c conda-forge flask-socketio  
+conda install -c anaconda flask  
  
 ## 개인 메모
  - RTC는 1 대 1 로 새롭게 만들어야 한다.
