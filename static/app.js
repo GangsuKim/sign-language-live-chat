@@ -80,7 +80,7 @@ async function getMeida(deviceId) {
     } catch (e) {
         console.log(e);
     }
-
+    
     console.log(myStream);
 }
 

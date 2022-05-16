@@ -24,16 +24,16 @@ socketio = SocketIO(app, cors_allowed_origins='*')
 
 @app.route("/")
 def hello_world():
-    global serverActive
-    if not serverActive:
-        conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
-        http_tunnel = ngrok.connect(5000)
-        tunnels = ngrok.get_tunnels()
+    # global serverActive
+    # if not serverActive:
+    #     conf.get_default().auth_token = "22bp1baMLz3H6QgE3t23iVzAIOj_rHpMqB78wrxnasPzERdn"
+    #     http_tunnel = ngrok.connect(5000)
+    #     tunnels = ngrok.get_tunnels()
 
-        for kk in tunnels:
-            print(kk)
+    #     for kk in tunnels:
+    #         print(kk)
 
-        serverActive = True
+    #     serverActive = True
 
     return render_template('index.html')
 
@@ -56,14 +56,14 @@ def asnwer(data,roomName):
 
 @socketio.on('ice')
 def ice(data,roomName):
-    print(data) # for Debug
+    # print(data) # for Debug
     emit('ice', data, broadcast=True, to=roomName, include_self=False)
     return
 
 # TTS Data receive
 @socketio.on('sendTTS')
 def getTTS(ttsData,roomName):
-    emit('streamTTS', ttsData, broadcast=True, to=roomName, include_self=False)
+    emit('streamTTS', ttsData, broadcast=True, to=roomName, include_self=True)
     return
 
 @socketio.on('disconnect')

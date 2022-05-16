@@ -8,17 +8,20 @@ chatForm.addEventListener('submit', (event) => {
 });
 
 userChat.addEventListener('keydown', (event) => {
-    if(event.keyCode == 13) {
+    if (event.keyCode == 13) {
         event.preventDefault();
         document.getElementById('sendChat').click();
     }
 });
 
-function appendMyChat(text) {   
-    socket.emit("user_message", {userText: text, userName: userName}, roomName);
+function appendMyChat(text) {
+    socket.emit("user_message", {
+        userText: text,
+        userName: userName
+    }, roomName);
 
     const myChatBoxDiv = document.createElement('div');
-    myChatBoxDiv.setAttribute('class','myChatBox')
+    myChatBoxDiv.setAttribute('class', 'myChatBox')
     myChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + userName + '</span><br>';
     myChatBoxDiv.innerHTML += '<span id="textArea">' + text + '</span>';
 
@@ -28,9 +31,9 @@ function appendMyChat(text) {
 
 function appendReceiveUserChat(data, status = 'normal') {
     const receiveChatBoxDiv = document.createElement('div');
-    receiveChatBoxDiv.setAttribute('class','receiveChatBox')
+    receiveChatBoxDiv.setAttribute('class', 'receiveChatBox')
     receiveChatBoxDiv.innerHTML = '<span id="myNameOnChat">' + data['userName'] + '</span><br>';
-    
+
     if (status == 'tts') {
         receiveChatBoxDiv.innerHTML += '<span id="textArea" class="ttsBG">🗣️' + data['userText'] + '</span>';
     } else {
@@ -45,13 +48,13 @@ socket.on("user_message_from", async (data) => {
     appendReceiveUserChat(data);
 });
 
-function userStateChange(name,state) {
+function userStateChange(name, state) {
     const stateDiv = document.createElement('div')
-    stateDiv.setAttribute('class','statusMessage');
+    stateDiv.setAttribute('class', 'statusMessage');
 
-    if(state == 'join') {
+    if (state == 'join') {
         stateDiv.innerText = name + '님이 들어왔습니다.';
-    } else if (state == 'left'){
+    } else if (state == 'left') {
         stateDiv.innerText = name + '님이 나갔습니다.';
     }
 
@@ -65,7 +68,11 @@ var pastData = '';
 
 socket.on("streamTTS", data => {
     if (pastData !== data) {
-        appendReceiveUserChat(data,'tts');
+        if (data['userName'] == userName) {
+            appendMyChat('🗣️' + data['userText']);
+        } else {
+            appendReceiveUserChat(data, 'tts');
+        }
         pastData = data;
     }
 });
