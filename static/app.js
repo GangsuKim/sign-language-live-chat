@@ -51,16 +51,34 @@ async function getCameras() { // 카메라의 목록 불러오기
     }
 }
 
+async function isAudioExist() {
+    var micCnt = 0;
+    try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const mics = devices.filter(device => device.kind == "audioinput");
+
+        micCnt = mics.length;
+    } catch (e) {
+        console.log(e);
+    }
+    return micCnt == 0 ? false : true;
+}
+
 async function getMeida(deviceId) {
+    var audioTF = true;
+    if(!isAudioExist()) {
+        audioTF = false;
+    }
+
     const initialConstreins = {
-        audio: true,
+        audio: audioTF,
         video: {
             facingMode: "user"
         },
     };
 
     const cameraConstreins = {
-        audio: true,
+        audio: audioTF,
         video: {
             deviceId: {
                 exact: deviceId
@@ -80,7 +98,7 @@ async function getMeida(deviceId) {
     } catch (e) {
         console.log(e);
     }
-    
+
     console.log(myStream);
 }
 
