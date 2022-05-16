@@ -2,6 +2,7 @@
 # from email.mime import image
 from http import server
 import re
+from site import USER_SITE
 from socket import socket
 from turtle import delay
 from flask import Flask,render_template,request  # 서버 구현을 위한 Flask 객체 import
@@ -83,20 +84,82 @@ def userMessage(data,roomName):
     return
 
 @socketio.on('signImage')
-def signImage(userImage):
-    now = datetime.now()
-    path = "./images/"
-
+def signImage(data):
+    # now = datetime.now()
+    # path = "./images/"
+    userImage = data['userImage'] # 추가 => 사용자 이름 전달을 위해 추가
     userImage = userImage + '=' * (4 - len(userImage) % 4)
     userImage = userImage.replace('\n','')
     userImage = userImage.replace("data:image/png;base64,",'')
 
-    image = base64.b64decode(userImage)
-    file_name = str(now.timestamp()) + ".png"
+    img = base64.b64decode(userImage)
+    imgByte = io.BytesIO(img)
+    img = Image.open(imgByte)
+    img = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2RGB)
 
-    with open(path + file_name, 'wb') as f:
-        f.write(image)
+    # YOLO 가중치 파일과 CFG 파일 로드
+    YOLO_net = cv2.dnn.readNet("H:/HEESUN/Hallym/4-1/capstone/sign-language-live-chat-main/yolov4-obj_best.weights", "H:/HEESUN/Hallym/4-1/capstone/sign-language-live-chat-main/yolov4-obj.cfg")
+
+    # YOLO NETWORK 재구성
+    classes = []
+    with open("H:/HEESUN/Hallym/4-1/capstone/sign-language-live-chat-main/h_obj.names", "r") as f:
+        classes = [line.strip() for line in f.readlines()]
+    layer_names = YOLO_net.getLayerNames()
+    output_layers = [layer_names[i - 1] for i in YOLO_net.getUnconnectedOutLayers()]
+
+    h, w, c = img.shape
+
+    # YOLO 입력
+    blob = cv2.dnn.blobFromImage(img, 0.00392, (416, 416), (0, 0, 0), True, crop=False)
+    YOLO_net.setInput(blob)
+    outs = YOLO_net.forward(output_layers)
+
+    class_ids = []
+    confidences = []
+    boxes = []
+
+    # outs가 감지한 개수.
+    for out in outs:
+        for detection in out:
+
+            # print(detection)
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
+
+            if confidence > 0.5:
+                # Object detected
+                center_x = int(detection[0] * w)
+                center_y = int(detection[1] * h)
+                dw = int(detection[2] * w)
+                dh = int(detection[3] * h)
+                # Rectangle coordinate
+                x = int(center_x - dw / 2)
+                y = int(center_y - dh / 2)
+                boxes.append([x, y, dw, dh])
+                confidences.append(float(confidence))
+                class_ids.append(class_id)
+
+    indexes = cv2.dnn.NMSBoxes(boxes, confidences, 0.45, 0.4)
+    final_output = None
+    for i in range(len(boxes)):
+        if i in indexes:
+            x, y, w, h = boxes[i]
+            final_output = str(classes[class_ids[i]])
+            # print(final_output)
+
+            # 경계상자와 클래스 정보 이미지에 입력
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 5)
+            cv2.putText(img, final_output, (x, y - 20), cv2.FONT_ITALIC, 0.5, (255, 255, 255), 1)
+    
+    # print(final_output)
+    
+    emit('SignToText', {'userText':final_output, 'userName' : data['userName']}, broadcast=True, to=data['roomName'], include_self=True)
+
+    cv2.imshow("YOLOv4", img)
+    cv2.waitKey(0)
     return
+
 
 @socketio.on_error()
 def chat_error_handler(e):

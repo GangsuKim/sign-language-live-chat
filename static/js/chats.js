@@ -48,6 +48,8 @@ function appendReceiveUserChat(data, status = 'normal') {
 
     if (status == 'tts') {
         receiveChatBoxDiv.innerHTML += '<span id="textArea" class="ttsBG">🗣️' + data['userText'] + '</span>';
+    } else if (status == 'sign'){
+        receiveChatBoxDiv.innerHTML += '<span id="textArea" class="ttsBG">SIGN : ' + data['userText'] + '</span>';
     } else {
         receiveChatBoxDiv.innerHTML += '<span id="textArea">' + data['userText'] + '</span>';
     }
@@ -87,5 +89,20 @@ socket.on("streamTTS", data => {
             appendReceiveUserChat(data, 'tts');
         }
         pastData = data;
+    }
+});
+
+
+// Sign to Chat
+var pastSignData = '';
+
+socket.on("SignToText", data => {
+    if (pastSignData !== data) {
+        if (data['userName'] == userName) { // Show TTS text box for my self
+            appendMyChat('SIGN : ' + data['userText']);
+        } else { // Show TTS text box from others
+            appendReceiveUserChat(data, 'sign');
+        }
+        pastSignData = data;
     }
 });
