@@ -66,7 +66,7 @@ async function isAudioExist() {
 
 async function getMeida(deviceId) {
     var audioTF = true;
-    if(!isAudioExist()) {
+    if (!isAudioExist()) {
         audioTF = false;
     }
 
@@ -176,7 +176,7 @@ async function intiCall() {
     call.hidden = false;
     footBar.hidden = false;
     await getMeida();
-    makeConnection(userId,userName);
+    makeConnection(userId, userName);
     startReco();
 }
 
@@ -188,7 +188,11 @@ async function handleWelcomeSubmit(event) { // Join Btn click
     inputUserName.value = "";
     myName.innerText = userName;
     await intiCall();
-    socket.emit("join_room", {roomName: inputRoomName.value, userID: userId, userName: userName}); // [S-1]
+    socket.emit("join_room", {
+        roomName: inputRoomName.value,
+        userID: userId,
+        userName: userName
+    }); // [S-1]
     roomName = inputRoomName.value; // 방의 이름을 변수에 저장
     inputRoomName.value = "";
 
@@ -200,24 +204,31 @@ async function handleWelcomeSubmit(event) { // Join Btn click
 welcomeForm.addEventListener("submit", handleWelcomeSubmit); // start of new connection
 
 socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_room'
-    makeConnection(data['userID'],data['userName']);
+    makeConnection(data['userID'], data['userName']);
     console.log('New user join : ' + data['userID']);
     const offer = await myPeerConnection[data['userID']].createOffer();
     myPeerConnection[data['userID']].setLocalDescription(offer);
     console.log("Sent offer");
     userStateChange(data['userName'], 'join')
-    socket.emit("offer", {offer:offer, userID: userId, userName: userName}, roomName);
+    socket.emit("offer", {
+        offer: offer,
+        userID: userId,
+        userName: userName
+    }, roomName);
 });
 
 socket.on("offer", async (data) => { // offer from exist users
     console.log("Recevied offer");
-    if(myPeerConnection[data['userID']] === undefined) {
-        makeConnection(data['userID'],data['userName']);
+    if (myPeerConnection[data['userID']] === undefined) {
+        makeConnection(data['userID'], data['userName']);
     }
     myPeerConnection[data['userID']].setRemoteDescription(data['offer']);
     const answer = await myPeerConnection[data['userID']].createAnswer();
     myPeerConnection[data['userID']].setLocalDescription(answer);
-    socket.emit("answer", {answer:answer, userID:userId}, roomName);
+    socket.emit("answer", {
+        answer: answer,
+        userID: userId
+    }, roomName);
     console.log("Sent the answer");
 })
 
@@ -228,14 +239,14 @@ socket.on("answer", async (data) => { // answer from new user
 
 socket.on("ice", async (data) => {
     console.log("Recevied Candidate");
-    if(myPeerConnection[data['userID']]['iceConnectionState'] != 'connected') {
+    if (myPeerConnection[data['userID']]['iceConnectionState'] != 'connected') {
         console.log('Add ice to ' + data.userID);
         await myPeerConnection[data['userID']].addIceCandidate(data['ice']);
     }
 });
 
 // User Left from room
-socket.on("userLeft", function(sid) {
+socket.on("userLeft", function (sid) {
     const videoFaces = call.querySelectorAll('div[class=videoBgc]');
     const cryptoSID = CryptoJS.SHA256(sid).toString();
     videoFaces.forEach(videos => {
@@ -248,7 +259,7 @@ socket.on("userLeft", function(sid) {
 });
 
 // RTC
-function makeConnection(senderID,userName) { 
+function makeConnection(senderID, userName) {
     myPeerConnection[senderID] = new RTCPeerConnection({
         iceServers: [{
             urls: [
@@ -258,8 +269,8 @@ function makeConnection(senderID,userName) {
                 "stun:stun3.l.google.com:19302",
                 "stun:stun4.l.google.com:19302",
             ],
-        },],
-    }); 
+        }, ],
+    });
     myPeerConnection[senderID]['userID'] = senderID;
     myPeerConnection[senderID]['userName'] = userName;
     myPeerConnection[senderID].addEventListener("icecandidate", handleIce);
@@ -271,7 +282,10 @@ function makeConnection(senderID,userName) {
 
 function handleIce(data) {
     console.log("Sent ICE");
-    socket.emit("ice", { ice:data.candidate, userID:userId }, roomName);
+    socket.emit("ice", {
+        ice: data.candidate,
+        userID: userId
+    }, roomName);
 }
 
 function handleAddStrean(data) { // 20220509 Working
@@ -299,36 +313,35 @@ function handleTrack(data) {
 
     // const isExist = !!document.querySelector('video[id=' + this['userID'] + ']');
     let work = true;
-    const videos =  document.getElementsByTagName('video');
+    const videos = document.getElementsByTagName('video');
 
-    if(videos.length != 1) {
+    if (videos.length != 1) {
         videos.forEach(video => {
-            if(video.id == this['userID'] && video.length == myPeerConnection.length) {
+            if (video.id == this['userID'] && video.length == myPeerConnection.length) {
                 work = false;
             }
         });
     }
 
-    if(work) {
+    if (work) {
         const videoBgc = document.createElement('div');
-        videoBgc.setAttribute('class','videoBgc');
+        videoBgc.setAttribute('class', 'videoBgc');
         videoBgc.setAttribute('id', this['userID']);
         videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
-    
+
         const video = document.createElement('video');
         video.setAttribute('class', 'peerFace');
         video.setAttribute('id', this['userID']);
         video.setAttribute('autoplay', '');
         video.setAttribute('playsinline', '');
         video.srcObject = data.streams[0];
-    
+
         videoBgc.appendChild(video);
         call.appendChild(videoBgc);
     }
 }
 
 // Video to Photo
-const canvas = document.getElementById('canvas');
 const photo = document.getElementById('photo');
 const photoBtn = document.getElementById('capImage');
 // const myFace = document.getElementById('myFace'); //myFace
@@ -336,6 +349,7 @@ const photoBtn = document.getElementById('capImage');
 photoBtn.addEventListener("click", capturePhoto);
 
 function capturePhoto() {
+    const canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
 
     canvas.width = 400;
@@ -344,7 +358,7 @@ function capturePhoto() {
 
     var data = canvas.toDataURL('image/png');
     // photo.setAttribute('src', data);
-    console.log(data);
+    // console.log(data);
     socket.emit("signImage", data); // Emit base64 Image
 }
 
