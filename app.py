@@ -33,6 +33,11 @@ def hello_world():
 
     return render_template('index.html')
 
+@app.route("/signUp")
+def signUp():
+    return render_template('signUp.html')
+
+# SOCKET.IO
 @socketio.on('join_room')
 def joinRoom(data):
     join_room(data['roomName'])
@@ -96,9 +101,20 @@ def signImage(userImage):
 
 @socketio.on('SignUp')
 def signUp(data):
-    with open('./database/user.csv','w', encoding='utf-8', newline='') as f:
+    # Check ID Exist
+    status = 'NotExist'
+    with open('./database/user.csv','r',encoding='utf-8') as f:
+        rdr = csv.reader(f)
+        for line in rdr:
+            if(line[0] == data['signId']):
+                emit('SignUpRes', 'IDExist', to=request.sid, include_self=True)
+                return
+
+    with open('./database/user.csv','a', encoding='utf-8', newline='') as f:
         wr = csv.writer(f)
         wr.writerow([data['signId'], data['signPw'], data['signName'], data['signBirth']])
+    
+    emit('SignUpRes', 'DONE', to=request.sid, include_self=True)
     return
 
 @socketio.on('IDExist')
