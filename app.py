@@ -1,6 +1,7 @@
 from http import server
 import re
 from socket import socket
+from textwrap import wrap
 from turtle import delay
 from flask import Flask,render_template,request  # 서버 구현을 위한 Flask 객체 import
 from pyngrok import ngrok ,conf # 외부 접속 링크 생성
@@ -8,6 +9,7 @@ from flask_socketio import SocketIO, join_room, emit
 import base64
 from datetime import datetime
 import ssl
+import csv
 
 # users = []
 
@@ -91,6 +93,27 @@ def signImage(userImage):
     with open(path + file_name, 'wb') as f:
         f.write(image)
     return
+
+@socketio.on('SignUp')
+def signUp(data):
+    with open('./database/user.csv','w', encoding='utf-8', newline='') as f:
+        wr = csv.writer(f)
+        wr.writerow([data['signId'], data['signPw'], data['signName'], data['signBirth']])
+    return
+
+@socketio.on('IDExist')
+def IDExist(id):
+    status = 'NotExist'
+    with open('./database/user.csv','r',encoding='utf-8') as f:
+        rdr = csv.reader(f)
+
+        for line in rdr:
+            if(line[0] == id):
+                status = 'Exist'
+    
+    emit('resIDExist', status, to=request.sid, include_self=True)
+    return
+
 
 @socketio.on_error()
 def chat_error_handler(e):
