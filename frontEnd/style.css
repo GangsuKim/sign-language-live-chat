@@ -1,3 +1,11 @@
+/* FONTS */
+@font-face {
+    font-family: 'AppleSDGothicNeoM00';
+    src: url('./fonts/AppleSDGothicNeoM.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* UNIVERSAL */
 * {
     font-family: 'AppleSDGothicNeoM00';
@@ -16,6 +24,46 @@ html, body {
     text-align: center;
 }
 
+/* SIGN DIV */
+.signDiv {
+    position: fixed;
+    width: 400px;
+    height: 130px;
+    right: 20%;
+    top: 30px;
+    text-align: center;
+    line-height: 100px;
+}
+
+.signDiv > div {
+    width: 156px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+
+    border: 4px solid #A6DE99;
+    border-radius: 23px;
+
+    font-size: 25px;
+    line-height: 40px;
+
+    background-color: #fff;
+
+    box-shadow: 0px 0px 40px rgba(104, 104, 104, 0.233);
+}
+
+.signDiv > div:hover {
+    cursor: pointer;
+    background-color: #e9f3e7;
+    padding: 4px;
+    transition: all 0.2s;
+}
+
+.signDiv > #signIn {
+    margin-right: 20px;
+}
+
+/* TOP DIV */
 .topDiv {
     height: 170px;
     width: 75%;
