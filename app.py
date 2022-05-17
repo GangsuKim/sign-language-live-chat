@@ -37,6 +37,10 @@ def hello_world():
 def signUp():
     return render_template('signUp.html')
 
+@app.route("/room")
+def room():
+    return render_template('room.html')
+
 # SOCKET.IO
 @socketio.on('join_room')
 def joinRoom(data):
