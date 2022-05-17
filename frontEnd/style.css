@@ -13,18 +13,29 @@ html, body {
 .inner {
     width: 75%;
     margin: 0 auto;
-    /* height: 100%; */
     text-align: center;
 }
 
 .topDiv {
     height: 170px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+#SIGNTItle {
+    line-height: 180px;
+    font-size: 70px;
+    text-decoration: none;
+    color: black;
 }
 
 .slideDiv {
-    height: 750px;
     background-color: #4BBC307D;
-    padding-top: 13vw;
+    /* padding-top: 13vw; */
+}
+
+.mainText {
+    padding: 150px 0px;
 }
 
 .slideDiv .mainText a {
