@@ -121,6 +121,18 @@ def signUp(data):
     emit('SignUpRes', 'DONE', to=request.sid, include_self=True)
     return
 
+@socketio.on('SignIn')
+def signIn(data):
+    # print(data)
+    with open('./database/user.csv','r',encoding='utf-8') as f:
+        rdr = csv.reader(f)
+        for line in rdr:
+            if(line[0] == data['signId'] and line[1] == data['signPw']):
+                emit('SignInRes', {'states':'Success', 'userId': data['signId'], 'userName':line[2]}, to=request.sid, include_self=True)
+                return
+    emit('SignInRes', {'states':'Fail'}, to=request.sid, include_self=True)
+    return
+
 @socketio.on('IDExist')
 def IDExist(id):
     status = 'NotExist'
