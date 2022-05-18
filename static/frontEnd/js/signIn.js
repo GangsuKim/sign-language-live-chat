@@ -3,7 +3,11 @@ const login_btn = document.getElementById('login_btn');
 const sigin_in_div = document.getElementsByClassName('signInDiv')[0];
 const signin_btn = document.getElementById('signIn');
 const signOut_btn = document.getElementById('signOut');
+const close_signin_btn = document.getElementById('closeBtn');
 
+close_signin_btn.addEventListener('click', function() {
+    sigin_in_div.hidden = true;
+})
 
 signin_btn.addEventListener('click', function() {
     if(!sessionStorage.getItem('userLogined')) {

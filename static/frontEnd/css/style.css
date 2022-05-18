@@ -128,6 +128,18 @@ html, body {
     cursor: pointer;
 }
 
+.closeBtn {
+    position: absolute;
+    font-size: 20px;
+    right: 20px;
+    top: 10px;
+}
+
+.closeBtn:hover {
+    color:rgba(104, 104, 104, 0.233);
+    cursor: pointer;
+}
+
 /* TOP DIV */
 .topDiv {
     height: 170px;
