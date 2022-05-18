@@ -9,6 +9,7 @@
 
     <!-- Local Style Sheet -->
     <link rel="stylesheet" href="./static/frontEnd/css/style.css">
+    <link rel="stylesheet" href="./static/frontEnd/css/joinRoom.css">
 
     <!-- SocketIO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
@@ -114,8 +115,14 @@
         </div>
     </div>
 
+    <div class="joinRoomDiv">
+        <input type="text" id="joinRoomName" class="joinRoomName" placeholder="Room name">
+        <div class="joinRoomBtn" id="joinRoomBtn">SIGN</div>
+    </div>
+
     <div style="height: 200px"></div>
     <script src="./static/frontEnd/js/signIn.js"></script>
+    <script src="./static/frontEnd/js/joinRoom.js"></script>
 </body>
 
 </html>

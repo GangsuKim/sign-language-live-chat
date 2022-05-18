@@ -44,6 +44,7 @@ html, body {
 
 .signed {
     position: absolute;
+    width: fit-content;
 }
 
 .signDiv > div {

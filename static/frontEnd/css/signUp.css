@@ -7,9 +7,11 @@
     border-bottom: 20px solid #4BBC307D;
 }
 
+/* 
 .signUpDiv > .inner {
-    /* border: 1px solid black; */
-}
+    border: 1px solid black; 
+} 
+*/
 
 .signTopText {
     height: 150px;
