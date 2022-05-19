@@ -1,6 +1,8 @@
 .signUpDiv {
-    height: 60%;
+    height: fit-content;
     width: 100%;
+    padding-top: 20px;
+    padding-bottom: 30px;
     /* background-color: black; */
 
     border-top: 20px solid #4BBC307D;
@@ -14,18 +16,27 @@
 */
 
 .signTopText {
+    margin-top: 50px;
     height: 150px;
-    line-height: 150px;
+    position: relative;
 }
 
 .signTopText > #welcome {
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 1000;
 }
 
 .signTopText img {
-    margin-left: -10px;
+    /* margin-left: -10px; */
     transform: scaleX(-1);
+    margin-left: -165px;
+    top: -40px;
+    /* right: 580px; */
+    position: absolute;
+}
+
+.signTopText > #welcome > span {
+    font-size: 40px;
 }
 
 .formDiv {

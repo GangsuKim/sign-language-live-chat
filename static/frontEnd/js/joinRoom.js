@@ -16,6 +16,12 @@ joinRoomBtn.addEventListener('click', function () {
             }
         } else {
             const promptUserName = prompt('사용자 이름을 입력해 주세요');
+
+            if(!promptUserName) {
+                alert('비회원은 사용자 이름을 입력하셔야 이용이 가능합니다.')
+                return;
+            }
+
             data = {
                 'name' : promptUserName,
                 'room' : joinRoomName.value
