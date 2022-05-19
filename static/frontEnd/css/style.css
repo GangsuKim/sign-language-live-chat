@@ -40,6 +40,7 @@ html, body {
     top: 30px;
     text-align: center;
     line-height: 100px;
+    z-index: 10;
 }
 
 .signed {
@@ -254,4 +255,34 @@ html, body {
     left: 0;
     bottom: 0;
     z-index: -1;
+}
+
+/* MAIN Images */
+.slideDiv > .inner > .mainText {
+    position: relative;
+}
+
+.slideDiv > .inner > .mainText > img {
+    z-index: -11;
+}
+
+#topRight {
+    position: absolute;
+    top: 20px;
+}
+
+#topLeft {
+    position: absolute;
+    transform: scaleX(-1);
+    margin-left: -300px;
+}
+
+#botRight {
+    position: absolute;
+    margin-left: 350px;
+}
+
+#botLeft {
+    position: absolute;
+    margin-left: -150px;
 }
