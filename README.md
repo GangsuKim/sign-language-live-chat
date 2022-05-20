@@ -9,11 +9,13 @@
  - TTS 데이터 표시 화면 구현 (UI)
 
 ## front-end & back-end 개발 현황
- - 메인 화면 1 (완료, Front)
- - 메인 화면 2,3 (0%, Front)
- - 로그인 (완료, Front + Back)
- - 회원가입 (완료, Front + Back)
- - 채팅방 화면 (50%, Back 완료 + Front 개발중)
+|Work|Part|Percent|
+|:---|:---:|:---:|
+|메인 화면 1|Front|100%|
+|메인 화면 2,3|Front|0%|
+|로그인|Front+Back|100%|
+|회원가입|Front+Back|100%|
+|채팅방 화면|Front+Back|50%|
 
 ## 개발 목표
  - 1:N 화상 회의 구현 (Function) <- 아마 불가능
