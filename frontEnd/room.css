@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body, main {
+    width: 100%;
+    height: 100%;
+}
+
+.topBar {
+    height: 50px;
+    width: 100%;
+    background-color: #A7DE9A;
+    z-index: 1;
+}
+
+main {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    /* background-color: yellow; */
+    z-index: -1;
+}
+
+.userList {
+    width: 80%;
+    height: 100%;
+    float: left;
+
+    /* background-color: black; */
+    position: relative;
+}
+
+.userView {
+    margin: 20px;
+    height: 400px;
+    background-color: white;
+    /* border: 1px solid black; */
+    border-radius: 30px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+    margin-bottom: 30px;
+}
+
+.userView > div {
+    display: inline-block;
+}
+
+.innerLeft {
+    margin: 30px;
+}
+
+.videoDUMMY {
+    background-color: black;
+    width: 400px;
+    height: 300px;
+}
+
+.rightBar {
+    float: right;
+    width: 20%;
+    height: 100%;
+    background-color: black;
+}
