@@ -108,6 +108,8 @@ function handleMuteClick() {
         muted = false;
         startReco();
     }
+
+    socket.emit("onMuteChange", {muted: muted,userID: userId}, roomName);
 }
 
 function handleCameraClick() {
@@ -278,44 +280,20 @@ function handleTrack(data) {
         
         cloneUserDiv.hidden = false;
         cloneUserDiv.id = this['userID'];
-        cloneUserDiv.querySelector('.userName').innerText ='TEST1';
     
         const userNameDiv = cloneUserDiv.querySelector('.userName');
-        userNameDiv.innerText = this['userName'];
+        console.log(userNameDiv);
+        userNameDiv.innerHTML = this['userName'] + userNameDiv.innerHTML;
 
         const video = cloneUserDiv.querySelector('video');
         video.id = this['userID'];
         video.srcObject = data.streams[0];
+
+        console.log(data);
     
         const userList = document.getElementsByClassName('userList')[0];
         console.log(userList)
         userList.appendChild(cloneUserDiv);
-        // const videoTD = document.createElement('td');
-        // videoTD.setAttribute('class', 'videoTD');
-
-        // const videoBgc = document.createElement('div');
-        // videoBgc.setAttribute('class', 'videoBgc');
-        // // videoBgc.setAttribute('id', this['userID']);
-        // videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
-
-        // const video = document.createElement('video');
-        // video.setAttribute('class', 'peerFace');
-        // video.setAttribute('id', this['userID']);
-        // video.setAttribute('autoplay', '');
-        // video.setAttribute('playsinline', '');
-        // video.srcObject = data.streams[0];
-
-        // videoBgc.appendChild(video);
-        // videoTD.appendChild(videoBgc);
-        // videoTD.innerHTML += '<div class="videoController">'
-        // videoTD.innerHTML += '<a class="videoMuteStat" id="userVideoStat"><i class="bi bi-camera-video-fill"></i></a>'
-        // videoTD.innerHTML += '<a class="audioMuteStat" id="userAudioStat"><i class="bi bi-mic-fill"></i></a></div>'
-
-        // const chatTD = document.createElement('td');
-
-        // // call.appendChild(videoBgc);
-        // const userView_div = document.createElement('div');
-        // userView_div.setAttribute('class','userView')
     }
 }
 

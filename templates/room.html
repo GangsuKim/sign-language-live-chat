@@ -54,7 +54,8 @@
                             </td>
                             <td class="chatTD">
                                 <div class="chat_td_inner">
-
+                                    <div class="box stt">STT 텍스트</div>
+                                    <div class="box sign">수화 텍스트</div>
                                 </div>
                             </td>
                         </tr>
@@ -69,13 +70,13 @@
                         <tr>
                             <td class="videoTD">
                                 <div class="videoBgc">
-                                    <div class="userName">김강수</div>
+                                    <div class="userName"><a id="userMicStatus" style="color: #00ff95;"> <i class="bi bi-mic-fill"></i></a></div>
                                     <video class="peerFace" id="asdsadadad" autoplay playsinline></video>
                                 </div>
-                                <div class="videoController">
+                                <!-- <div class="videoController">
                                     <a class="videoMuteStat" id="userVideoStat"><i class="bi bi-camera-video-fill"></i></a>
                                     <a class="audioMuteStat" id="userAudioStat"><i class="bi bi-mic-fill"></i></a>
-                                </div>
+                                </div> -->
                             </td>
                             <td class="chatTD">
                                 <div class="chat_td_inner">
@@ -133,6 +134,7 @@
     <script src="./static/frontEnd/js/room.js"></script>
     <script src="./static/frontEnd/js/chats.js"></script>
     <script src="./static/frontEnd/js/tts.js"></script>
+    <script src="./static/frontEnd/js/handler.js"></script>
 </body>
 
 </html>
