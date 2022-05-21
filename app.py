@@ -87,22 +87,6 @@ def userMessage(data,roomName):
     emit('user_message_from', data, broadcast=True, to=roomName, include_self=False)
     return
 
-@socketio.on('signImage')
-def signImage(userImage):
-    now = datetime.now()
-    path = "./images/"
-
-    userImage = userImage + '=' * (4 - len(userImage) % 4)
-    userImage = userImage.replace('\n','')
-    userImage = userImage.replace("data:image/png;base64,",'')
-
-    image = base64.b64decode(userImage)
-    file_name = str(now.timestamp()) + ".png"
-
-    with open(path + file_name, 'wb') as f:
-        f.write(image)
-    return
-
 @socketio.on('SignUp')
 def signUp(data):
     # Check ID Exist
@@ -146,6 +130,27 @@ def IDExist(id):
     emit('resIDExist', status, to=request.sid, include_self=True)
     return
 
+
+@socketio.on('onMuteChange')
+def onMuteChange(data, roomName):
+    emit('res_onMuteChange', data, broadcast=True, to=roomName, include_self=False)
+    return
+
+@socketio.on('signImage')
+def signImage(userImage):
+    now = datetime.now()
+    path = "./images/"
+
+    userImage = userImage + '=' * (4 - len(userImage) % 4)
+    userImage = userImage.replace('\n','')
+    userImage = userImage.replace("data:image/png;base64,",'')
+
+    image = base64.b64decode(userImage)
+    file_name = str(now.timestamp()) + ".png"
+
+    with open(path + file_name, 'wb') as f:
+        f.write(image)
+    return
 
 @socketio.on_error()
 def chat_error_handler(e):

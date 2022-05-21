@@ -108,6 +108,8 @@ function handleMuteClick() {
         muted = false;
         startReco();
     }
+
+    socket.emit("onMuteChange", {muted: muted,userID: userId}, roomName);
 }
 
 function handleCameraClick() {
@@ -214,7 +216,7 @@ socket.on("ice", async (data) => {
 
 // User Left from room
 socket.on("userLeft", function (sid) {
-    const videoFaces = call.querySelectorAll('div[class=videoBgc]');
+    const videoFaces = call.querySelectorAll('.userView');
     const cryptoSID = CryptoJS.SHA256(sid).toString();
     videoFaces.forEach(videos => {
         if (videos['id'] == cryptoSID) {
@@ -262,8 +264,9 @@ function handleTrack(data) {
     // const isExist = !!document.querySelector('video[id=' + this['userID'] + ']');
     let work = true;
     const videos = document.getElementsByTagName('video');
+    console.log(videos);
 
-    if (videos.length != 1) {
+    if (videos.length != 2) {
         videos.forEach(video => {
             if (video.id == this['userID'] && video.length == myPeerConnection.length) {
                 work = false;
@@ -271,21 +274,26 @@ function handleTrack(data) {
         });
     }
 
+    // 신규 유저 생성
     if (work) {
-        const videoBgc = document.createElement('div');
-        videoBgc.setAttribute('class', 'videoBgc');
-        videoBgc.setAttribute('id', this['userID']);
-        videoBgc.innerHTML = '<div class="userName">' + this['userName'] + '</div>';
+        const cloneUserDiv = document.getElementById('newUserCloneDiv').cloneNode(true);
+        
+        cloneUserDiv.hidden = false;
+        cloneUserDiv.id = this['userID'];
+    
+        const userNameDiv = cloneUserDiv.querySelector('.userName');
+        console.log(userNameDiv);
+        userNameDiv.innerHTML = this['userName'] + userNameDiv.innerHTML;
 
-        const video = document.createElement('video');
-        video.setAttribute('class', 'peerFace');
-        video.setAttribute('id', this['userID']);
-        video.setAttribute('autoplay', '');
-        video.setAttribute('playsinline', '');
+        const video = cloneUserDiv.querySelector('video');
+        video.id = this['userID'];
         video.srcObject = data.streams[0];
 
-        videoBgc.appendChild(video);
-        call.appendChild(videoBgc);
+        console.log(data);
+    
+        const userList = document.getElementsByClassName('userList')[0];
+        console.log(userList)
+        userList.appendChild(cloneUserDiv);
     }
 }
 
@@ -311,7 +319,7 @@ function capturePhoto() {
 
 // User left at safari or other browsers
 function onConnectChange(event) {
-    const videoFaces = call.querySelectorAll('div[class=videoBgc]');
+    const videoFaces = call.querySelectorAll('.userView');
     if (this.connectionState == 'disconnected' || this.connectionState == 'failed') {
         videoFaces.forEach(videos => {
             if (videos['id'] == this['userID']) {

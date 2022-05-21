@@ -90,4 +90,24 @@ socket.on("streamTTS", data => {
     }
 });
 
-// Chay bar hide
+// Chat bar hide
+const rbTopBar = document.getElementsByClassName('rbTopBar')[0];
+const rightChatBar = document.getElementById('rightBar');
+const open_bar = document.getElementById('open_bar');
+const userList = document.querySelector('.userList');
+
+let closeBarStatus = false;
+
+function closeBarToggle() {
+    if(!closeBarStatus) {
+        rightChatBar.hidden = true;
+        rightChatBar.style.display = 'none';
+        userList.style.width = '100%';
+    } else {
+        rightChatBar.style.display = 'flex';
+        rightChatBar.hidden = false;
+        userList.style.width = '80%';
+    }
+    open_bar.hidden = !rightChatBar.hidden;
+    closeBarStatus = !closeBarStatus;
+}

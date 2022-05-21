@@ -39,7 +39,7 @@ main {
 
 .userView {
     margin: 20px;
-    height: 400px;
+    height: 399px;
     background-color: white;
     /* border: 1px solid black; */
     border-radius: 30px;
@@ -74,14 +74,38 @@ main {
     width: 97%;
 }
 
+/* 사용자 우측 STT/SIGN 화면 */
 .chatTD {
     width: 100%;
 }
 
 .chat_td_inner {
-    height: 360px;
+    height: 320px;
     margin: 0px 10px;
-    border: 1px solid black;
+    margin-left: 30px;
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    overflow: auto;
+}
+
+.chat_td_inner > .box {
+    display: inline-block;
+    height: 30px;
+    width: fit-content;
+    padding: 5px 10px 0px 10px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.chat_td_inner > .stt {
+    background-color: rgb(62, 172, 62);
+}
+
+.chat_td_inner > .sign {
+    background-color: rgb(62, 106, 172);
 }
 
 .videoMuteStat, .audioMuteStat {
@@ -132,4 +156,15 @@ video {
     transform: scaleX(-1);
     z-index: -1;
     height: 300px;
+}
+
+.closeBarDiv {
+    z-index: 100;
+    height: 30px;
+}
+
+#open_bar {
+    position: absolute;
+    top: 5px;
+    right: -10px;
 }
