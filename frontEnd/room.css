@@ -12,7 +12,11 @@ html, body, main {
     height: 50px;
     width: 100%;
     background-color: #A7DE9A;
-    z-index: 1;
+    z-index: 10;
+}
+
+.topBar > img {
+    margin: 5px;
 }
 
 main {
@@ -20,7 +24,7 @@ main {
     top: 0;
     width: 100%;
     /* background-color: yellow; */
-    z-index: -1;
+    z-index: 1;
 }
 
 .userList {
@@ -48,6 +52,7 @@ main {
 
 .innerLeft {
     margin: 30px;
+    float: left;
 }
 
 .videoDUMMY {
@@ -56,9 +61,56 @@ main {
     height: 300px;
 }
 
+.videoController {
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+}
+
+.userViewTable {
+    display: inline-block;
+    margin: 20px;
+    width: 97%;
+}
+
+.chatTD {
+    width: 100%;
+}
+
+.chat_td_inner {
+    height: 360px;
+    margin: 0px 10px;
+    border: 1px solid black;
+}
+
+.videoMuteStat, .audioMuteStat {
+    margin-left: 10px;
+    font-size: 28px;
+    color: rgb(94, 94, 94);
+}
+
+#myVideoStat > i:hover, #myAudioStat > i:hover {
+    cursor: pointer;
+    color: black;
+}
+
+.innerRight {
+    float: right;
+    width: 400px;
+    height: 340px;
+    border: 1px solid black;
+    margin: 30px;
+}
+
+/* RIGHT BAR */
 .rightBar {
     float: right;
     width: 20%;
     height: 100%;
+
+}
+
+.rbTopBar {
     background-color: black;
+    height: 50px;
 }

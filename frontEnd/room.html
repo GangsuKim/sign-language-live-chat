@@ -27,22 +27,66 @@
 
 <body>
     <div class="topBar">
-        SIGN
+        <img src="../static/frontEnd/images/LogoRight.png" alt="MainLogo" width="30px">
     </div>
 
     <main>
         <div class="userList">
-            <div style="height: 50px;"></div>
-            <div class="userView" id="myView">
-                <div class="innerLeft">
-                   <div class="videoDUMMY"></div>
-                </div>
-                <div class="innerRight"></div>
-            </div>
-            <div class="userView"></div>
-        </div>
-        <div class="rightBar">
 
+            <div style="height: 50px;"></div>
+
+            <div class="userView" id="myView">
+                <table class="userViewTable">
+                    <tbody>
+                        <tr>
+                            <td class="videoTD">
+                                <div class="videoDUMMY"></div>
+                                <div class="videoController">
+                                    <a class="videoMuteStat" id="myVideoStat"><i class="bi bi-camera-video-fill"></i></a>
+                                    <a class="audioMuteStat" id="myAudioStat"><i class="bi bi-mic-fill"></i></a>
+                                </div>
+                            </td>
+                            <td class="chatTD">
+                                <div class="chat_td_inner">
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Others video view -->
+            <div class="userView">
+                <table class="userViewTable">
+                    <tbody>
+                        <tr>
+                            <td class="videoTD">
+                                <div class="videoDUMMY"></div>
+                                <div class="videoController">
+                                    <a class="videoMuteStat" id="userVideoStat"><i
+                                            class="bi bi-camera-video-fill"></i></a>
+                                    <a class="audioMuteStat" id="userAudioStat"><i class="bi bi-mic-fill"></i></a>
+                                </div>
+                            </td>
+                            <td class="chatTD">
+                                <div class="chat_td_inner">
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Chat DIV -->
+        <div class="rightBar">
+            <div class="rbTopBar">
+
+            </div>
+            LINE
         </div>
     </main>
 
