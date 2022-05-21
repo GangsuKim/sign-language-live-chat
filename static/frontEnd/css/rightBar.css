@@ -1,3 +1,4 @@
+/* MAIN TOP BAR */
 .rightBar {
     background-color: white;
     width: 20%;
@@ -6,7 +7,7 @@
     right: 0;
     top: 0;
     flex-direction: column;
-
+    display: flex;
     box-shadow: -10px 0px 17px 0px #dfdfdf85;
 }
 
@@ -15,23 +16,59 @@
     height: 50px;
     background-color: #A7DE9A;
     z-index: 10;
+    line-height: 45px;
 } 
+
+.closeBar > i {
+    margin-left: 10px;
+    font-size: 30px;
+    color: white;
+}
+
+.closeBar > i:hover {
+    cursor: pointer;
+    color: rgb(105, 189, 102);
+}
+
+.closeBar[id=open_bar] {
+    float: right;
+    margin-right: 20px;
+    z-index: 3;
+}
 
 #chatBox {
     width: 100%;
-    margin-bottom: 170px;
+    margin-bottom: 145px;
     flex: 1;
     overflow: auto;
+}
+
+#attatch_div {
+    height: 40px;
+    width: 100%;
+    line-height: 35px;
+    border-bottom: 1px solid rgb(170, 170, 170);
+    padding: 0px 5px;
+}
+
+#attatch_div i {
+    font-size: 30px;
+    color: rgb(94, 94, 94);
+}
+
+#attatch_div i:hover {
+    cursor: pointer;
+    color: black;
 }
 
 #chatInputDiv {
     margin-bottom: 3px;
     border-top: 1px solid rgb(170, 170, 170);
     height: 100px;
-    line-height: 70px;
+    /* line-height: 70px; */
     width: 100%;
     position: fixed;
-    bottom: 0;
+    bottom: 40px;
 }
 
 #chatForm > textarea {

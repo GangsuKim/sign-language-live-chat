@@ -46,7 +46,8 @@
                                 </div>
 
                                 <div class="videoController">
-                                    <a class="videoMuteStat" id="myVideoStat"><i class="bi bi-camera-video-fill"></i></a>
+                                    <a class="videoMuteStat" id="myVideoStat"><i
+                                            class="bi bi-camera-video-fill"></i></a>
                                     <a class="audioMuteStat" id="myAudioStat"><i class="bi bi-mic-fill"></i></a>
                                     <select id="cameras"></select>
                                 </div>
@@ -62,15 +63,17 @@
             </div>
 
             <!-- Others video view -->
-            <div class="userView" hidden>
+            <div class="userView" id="newUserCloneDiv" hiddne>
                 <table class="userViewTable">
                     <tbody>
                         <tr>
                             <td class="videoTD">
-                                <div class="videoDUMMY"></div>
+                                <div class="videoBgc">
+                                    <div class="userName">김강수</div>
+                                    <video class="peerFace" id="asdsadadad" autoplay playsinline></video>
+                                </div>
                                 <div class="videoController">
-                                    <a class="videoMuteStat" id="userVideoStat"><i
-                                            class="bi bi-camera-video-fill"></i></a>
+                                    <a class="videoMuteStat" id="userVideoStat"><i class="bi bi-camera-video-fill"></i></a>
                                     <a class="audioMuteStat" id="userAudioStat"><i class="bi bi-mic-fill"></i></a>
                                 </div>
                             </td>
@@ -87,8 +90,10 @@
         </div>
 
         <!-- Chat DIV -->
-        <div class="rightBar">
-            <div class="rbTopBar"></div>
+        <div class="rightBar" id="rightBar">
+            <div class="rbTopBar">
+                <a class="closeBar" id="close_bar" onclick="closeBarToggle()"><i class="bi bi-list"></i></a>
+            </div>
 
             <div id="chatBox">
                 <div style="height: 10px"></div>
@@ -98,25 +103,32 @@
                         <span id="textArea">안녕</span>
                     </div>
                     -->
-    
+
                 <!-- <div class="receiveChatBox">
                         <span id="myNameOnChat">김강수</span><br>
                         <span id="textArea">안녕</span>
                     </div> -->
-    
+
                 <!-- <div class="statusMessage">
                         김강수 님이 들어왔습니다.
                     </div> -->
             </div>
 
             <div id="chatInputDiv">
+                <div id="attatch_div">
+                    <a id="toggleSpeach" hidden><i class="bi bi-megaphone"></i></a>
+                    <a id="sendFile"><i class="bi bi-paperclip"></i></a>
+                </div>
                 <form id="chatForm">
                     <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
                     <input type="submit" id="sendChat" value="전송">
                 </form>
             </div>
         </div>
+        <a class="closeBar" id="open_bar" onclick="closeBarToggle()" hidden><i class="bi bi-list"></i></a>
     </main>
+
+
 
     <script src="./static/frontEnd/js/room.js"></script>
     <script src="./static/frontEnd/js/chats.js"></script>
