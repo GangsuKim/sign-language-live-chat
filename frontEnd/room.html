@@ -41,10 +41,15 @@
                     <tbody>
                         <tr>
                             <td class="videoTD">
-                                <div class="videoDUMMY"></div>
+                                <div class="videoBgc">
+                                    <div id="myName">김강수</div>
+                                    <video id="myFace" autoplay playsinline muted width="400"></video>
+                                </div>
+
                                 <div class="videoController">
                                     <a class="videoMuteStat" id="myVideoStat"><i class="bi bi-camera-video-fill"></i></a>
                                     <a class="audioMuteStat" id="myAudioStat"><i class="bi bi-mic-fill"></i></a>
+                                    <select id="cameras"></select>
                                 </div>
                             </td>
                             <td class="chatTD">
@@ -114,6 +119,7 @@
         </div>
     </main>
 
+    <script src="./room.js"></script>
 </body>
 
 </html>

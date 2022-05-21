@@ -3,8 +3,8 @@ const socket = io(); // Socket.io
 
 const myFace = document.getElementById("myFace"); //
 
-const muteBtn = document.getElementById("myAudioStat"); //
-const cameraBtn = document.getElementById("myVideoStat"); //
+const muteBtn = document.getElementById("myVideoStat"); //
+const cameraBtn = document.getElementById("myAudioStat"); //
 
 const camerasSelect = document.getElementById("cameras");
 const welcome = document.getElementById("welcome");
