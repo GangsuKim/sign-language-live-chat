@@ -9,6 +9,7 @@
 
     <!-- Lcoal css -->
     <link rel="stylesheet" href="room.css">
+    <link rel="stylesheet" href="rightBar.css">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -26,7 +27,99 @@
 </head>
 
 <body>
+    <div class="topBar">
+        <img src="../static/frontEnd/images/LogoRight.png" alt="MainLogo" width="30px">
+    </div>
+
+    <main>
+        <div class="userList">
+
+            <div style="height: 50px;"></div>
+
+            <div class="userView" id="myView">
+                <table class="userViewTable">
+                    <tbody>
+                        <tr>
+                            <td class="videoTD">
+                                <div class="videoBgc">
+                                    <div id="myName">김강수</div>
+                                    <video id="myFace" autoplay playsinline muted width="400"></video>
+                                </div>
+
+                                <div class="videoController">
+                                    <a class="videoMuteStat" id="myVideoStat"><i class="bi bi-camera-video-fill"></i></a>
+                                    <a class="audioMuteStat" id="myAudioStat"><i class="bi bi-mic-fill"></i></a>
+                                    <select id="cameras"></select>
+                                </div>
+                            </td>
+                            <td class="chatTD">
+                                <div class="chat_td_inner">
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Others video view -->
+            <div class="userView">
+                <table class="userViewTable">
+                    <tbody>
+                        <tr>
+                            <td class="videoTD">
+                                <div class="videoDUMMY"></div>
+                                <div class="videoController">
+                                    <a class="videoMuteStat" id="userVideoStat"><i
+                                            class="bi bi-camera-video-fill"></i></a>
+                                    <a class="audioMuteStat" id="userAudioStat"><i class="bi bi-mic-fill"></i></a>
+                                </div>
+                            </td>
+                            <td class="chatTD">
+                                <div class="chat_td_inner">
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Chat DIV -->
+        <div class="rightBar">
+            <div class="rbTopBar"></div>
+
+            <div id="chatBox">
+                <div style="height: 10px"></div>
+                <!-- 
+                    <div class="myChatBox">
+                        <span id="myNameOnChat">김강수</span><br>
+                        <span id="textArea">안녕</span>
+                    </div>
+                    -->
     
+                <!-- <div class="receiveChatBox">
+                        <span id="myNameOnChat">김강수</span><br>
+                        <span id="textArea">안녕</span>
+                    </div> -->
+    
+                <!-- <div class="statusMessage">
+                        김강수 님이 들어왔습니다.
+                    </div> -->
+            </div>
+
+            <div id="chatInputDiv">
+                <form id="chatForm">
+                    <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
+                    <input type="submit" id="sendChat" value="전송">
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="./room.js"></script>
 </body>
 
 </html>

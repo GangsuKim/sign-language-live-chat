@@ -1,11 +1,8 @@
-// NEW VERSION
 const socket = io(); // Socket.io 
 
-const myFace = document.getElementById("myFace"); //
-
-const muteBtn = document.getElementById("myAudioStat"); //
-const cameraBtn = document.getElementById("myVideoStat"); //
-
+const myFace = document.getElementById("myFace");
+const muteBtn = document.getElementById("mute");
+const cameraBtn = document.getElementById("camera");
 const camerasSelect = document.getElementById("cameras");
 const welcome = document.getElementById("welcome");
 const call = document.getElementById("call");
@@ -344,7 +341,7 @@ async function initRoomJoin() {
     }); // [S-1]
 
     roomName = dataRoomName; // 방의 이름을 변수에 저장
-    // rightBar.style.display = 'flex'; // Show chatbox
+    rightBar.style.display = 'flex'; // Show chatbox
 }
 
 initRoomJoin();

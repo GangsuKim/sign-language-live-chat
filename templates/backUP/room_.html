@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROOM SIGN | 실시간 화상 채팅</title>
+
+    <!-- Local style -->
+    <link rel="stylesheet" href="/static/streamStyle.css">
+    <link rel="stylesheet" href="/static/rightBar.css">
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <!-- BootStrap ICON -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- SocketIO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+        integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+        crossorigin="anonymous"></script>
+
+    <!-- CryptoJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+
+<body>
+    <!-- Call of my video -->
+    <div id="call">
+        <div id="myStream" style="width: fit-content;">
+            <div class="videoBgc">
+                <div id="myName"></div>
+                <video id="myFace" autoplay playsinline muted width="400"></video>
+            </div>
+        </div>
+    </div>
+
+    <div class="rightBar" id="rightBar">
+        <div id="rightTopBar"></div>
+
+        <div id="chatBox">
+            <div style="height: 10px"></div>
+            <!-- 
+                <div class="myChatBox">
+                    <span id="myNameOnChat">김강수</span><br>
+                    <span id="textArea">안녕</span>
+                </div>
+                -->
+
+            <!-- <div class="receiveChatBox">
+                    <span id="myNameOnChat">김강수</span><br>
+                    <span id="textArea">안녕</span>
+                </div> -->
+
+            <!-- <div class="statusMessage">
+                    김강수 님이 들어왔습니다.
+                </div> -->
+        </div>
+
+        <div id="chatInputDiv">
+            <form id="chatForm">
+                <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
+                <input type="submit" id="sendChat" value="전송">
+            </form>
+        </div>
+    </div>
+
+    <div class="footBar" id="footBar">
+        <div id="mute" class="bottomBtn" style="margin-left: 5px;">
+            <i class="bi bi-mic-fill"></i>
+        </div>
+
+        <div id="camera" class="bottomBtn">
+            <i class="bi bi-camera-video-fill"></i>
+        </div>
+
+        <select id="cameras"></select>
+    </div>
+
+    <div class="imgDiv" hidden>
+        <canvas id="canvas" hidden></canvas>
+        <img id="photo" width="400" height="300">
+    </div>
+    </main>
+
+    <!-- room.js for video chat -->
+    <script src="./static/frontEnd/js/room.js"></script>
+    <script src="/static/js/tts.js"></script>
+    <!-- <script src="/static/js/userId.js"></script> -->
+    <script src="/static/js/chats.js"></script>
+    <script src="/static/js/signUp.js"></script>
+</body>
+
+</html>
