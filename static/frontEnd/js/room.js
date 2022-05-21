@@ -262,8 +262,9 @@ function handleTrack(data) {
     // const isExist = !!document.querySelector('video[id=' + this['userID'] + ']');
     let work = true;
     const videos = document.getElementsByTagName('video');
+    console.log(videos);
 
-    if (videos.length != 1) {
+    if (videos.length != 2) {
         videos.forEach(video => {
             if (video.id == this['userID'] && video.length == myPeerConnection.length) {
                 work = false;
@@ -274,15 +275,21 @@ function handleTrack(data) {
     // 신규 유저 생성
     if (work) {
         const cloneUserDiv = document.getElementById('newUserCloneDiv').cloneNode(true);
-    
+        
+        cloneUserDiv.hidden = false;
         cloneUserDiv.id = this['userID'];
         cloneUserDiv.querySelector('.userName').innerText ='TEST1';
     
+        const userNameDiv = cloneUserDiv.querySelector('.userName');
+        userNameDiv.innerText = this['userName'];
+
         const video = cloneUserDiv.querySelector('video');
         video.id = this['userID'];
         video.srcObject = data.streams[0];
     
-        console.log(cloneUserDiv);
+        const userList = document.getElementsByClassName('userList')[0];
+        console.log(userList)
+        userList.appendChild(cloneUserDiv);
         // const videoTD = document.createElement('td');
         // videoTD.setAttribute('class', 'videoTD');
 
@@ -368,11 +375,6 @@ async function initRoomJoin() {
 
     roomName = dataRoomName; // 방의 이름을 변수에 저장
     // rightBar.style.display = 'flex'; // Show chatbox
-}
-
-// Test
-function cloneNewUserNode () {
-
 }
 
 initRoomJoin();
