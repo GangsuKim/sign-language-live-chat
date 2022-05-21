@@ -15,7 +15,7 @@
 |메인 화면 2,3|Front|0%|
 |로그인|Front+Back|100%|
 |회원가입|Front+Back|100%|
-|채팅방 화면|Front+Back|75%|
+|채팅방 화면|Front+Back|90%|
 
 ## 개발 목표
  - 1:N 화상 회의 구현 (Function) <- 아마 불가능
