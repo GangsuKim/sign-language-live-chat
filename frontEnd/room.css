@@ -101,16 +101,3 @@ main {
     border: 1px solid black;
     margin: 30px;
 }
-
-/* RIGHT BAR */
-.rightBar {
-    float: right;
-    width: 20%;
-    height: 100%;
-
-}
-
-.rbTopBar {
-    background-color: black;
-    height: 50px;
-}

@@ -9,6 +9,7 @@
 
     <!-- Lcoal css -->
     <link rel="stylesheet" href="room.css">
+    <link rel="stylesheet" href="rightBar.css">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -83,10 +84,33 @@
 
         <!-- Chat DIV -->
         <div class="rightBar">
-            <div class="rbTopBar">
+            <div class="rbTopBar"></div>
 
+            <div id="chatBox">
+                <div style="height: 10px"></div>
+                <!-- 
+                    <div class="myChatBox">
+                        <span id="myNameOnChat">김강수</span><br>
+                        <span id="textArea">안녕</span>
+                    </div>
+                    -->
+    
+                <!-- <div class="receiveChatBox">
+                        <span id="myNameOnChat">김강수</span><br>
+                        <span id="textArea">안녕</span>
+                    </div> -->
+    
+                <!-- <div class="statusMessage">
+                        김강수 님이 들어왔습니다.
+                    </div> -->
             </div>
-            LINE
+
+            <div id="chatInputDiv">
+                <form id="chatForm">
+                    <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
+                    <input type="submit" id="sendChat" value="전송">
+                </form>
+            </div>
         </div>
     </main>
 
