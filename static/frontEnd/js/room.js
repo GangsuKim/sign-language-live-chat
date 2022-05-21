@@ -214,7 +214,7 @@ socket.on("ice", async (data) => {
 
 // User Left from room
 socket.on("userLeft", function (sid) {
-    const videoFaces = call.querySelectorAll('div[class=videoBgc]');
+    const videoFaces = call.querySelectorAll('.userView');
     const cryptoSID = CryptoJS.SHA256(sid).toString();
     videoFaces.forEach(videos => {
         if (videos['id'] == cryptoSID) {
@@ -341,7 +341,7 @@ function capturePhoto() {
 
 // User left at safari or other browsers
 function onConnectChange(event) {
-    const videoFaces = call.querySelectorAll('div[class=videoBgc]');
+    const videoFaces = call.querySelectorAll('.userView');
     if (this.connectionState == 'disconnected' || this.connectionState == 'failed') {
         videoFaces.forEach(videos => {
             if (videos['id'] == this['userID']) {
