@@ -38,7 +38,7 @@ function startReco() {
         // n초마다 서버로 STT 데이터 보내기
         sendData = setInterval(function () {
             if((speechToText + interimTranscript).length > 1) {
-                socket.emit("sendTTS", {userText: (speechToText + interimTranscript), userName: userName}, roomName);
+                socket.emit("sendTTS", {userText: (speechToText + interimTranscript), userName: userName, userID:userId}, roomName);
                 speechToText = "";
                 interimTranscript = "";
             }

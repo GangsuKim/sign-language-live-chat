@@ -10,6 +10,7 @@
     <!-- Lcoal css -->
     <link rel="stylesheet" href="./static/frontEnd/css/room.css">
     <link rel="stylesheet" href="./static/frontEnd/css/rightBar.css">
+    <link rel="stylesheet" href="./static/frontEnd/css/rightClick.css">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -49,7 +50,7 @@
                                     <a class="videoMuteStat" id="myVideoStat"><i
                                             class="bi bi-camera-video-fill"></i></a>
                                     <a class="audioMuteStat" id="myAudioStat"><i class="bi bi-mic-fill"></i></a>
-                                    <select id="cameras"></select>
+                                    <!-- <select id="cameras"></select> -->
                                 </div>
                             </td>
                             <td class="chatTD">
@@ -131,6 +132,11 @@
             </div>
         </div>
         <a class="closeBar" id="open_bar" onclick="closeBarToggle()" hidden><i class="bi bi-list"></i></a>
+
+        <div class="cameraRightclickDiv" id="right_click_camera" hidden>
+            <div id="RC_Camera_muteClick" onclick="handleCameraClick()">카메라 끄기</div>
+            <select id="cameras"></select>
+        </div>
     </main>
 
 

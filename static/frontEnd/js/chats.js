@@ -85,14 +85,19 @@ socket.on("streamTTS", data => {
             // appendMyChat('🗣️' + data['userText']);
             appenMyViewChat(data['userText'], 'stt');
         } else { // Show TTS text box from others
-            appendReceiveUserChat(data, 'tts');
+            appendUserViewChat(data['userText'], 'stt', data['userID']);
         }
         pastData = data;
     }
 });
 
+// Result of SIGN to TEXT
 socket.on("streamSIGN", data => {
-    console.log(data);
+    if(data['userId'] == userId) {
+        appenMyViewChat(data['userText'], 'sign');
+    } else {
+        appendUserViewChat('HIHI', 'sign', data['userId']);
+    }
 });
 
 function appenMyViewChat(text, type) {
@@ -101,6 +106,17 @@ function appenMyViewChat(text, type) {
         my_view_inner_chat.innerHTML += '<div class="box stt">' + text + '</div>'
     } else {
         my_view_inner_chat.innerHTML += '<div class="box sign">' + text + '</div>'
+    }
+}
+
+function appendUserViewChat(text, type, userID) {
+    const otherUserView = document.querySelector('div[id="' + userID + '"]');
+    const otherUserChat = otherUserView.querySelector('.chat_td_inner');
+    console.log(otherUserView);
+    if(type == 'stt') {
+        otherUserChat.innerHTML += '<div class="box stt">' + text + '</div>'
+    } else {
+        otherUserChat.innerHTML += '<div class="box sign">' + text + '</div>'
     }
 }
 

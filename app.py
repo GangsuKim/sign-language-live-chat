@@ -151,7 +151,8 @@ def signImage(data):
 
     # with open(path + file_name, 'wb') as f:
     #     f.write(image)
-    print(data)
+    # print(data['roomName'])
+    emit('streamSIGN', {'userId': data['userId'], "userText" : "hello"}, broadcast=True, to=data['roomName'], include_self=True)
     return
 
 @socketio.on_error()

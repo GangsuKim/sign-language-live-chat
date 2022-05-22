@@ -95,6 +95,9 @@ async function getMeida(deviceId) {
     // console.log(myStream);
 }
 
+const main = document.getElementsByTagName('main')[0];
+const right_click_camera = document.getElementById('right_click_camera');
+
 function handleMuteClick() {
     myStream.getAudioTracks().forEach((track) => (track.enabled = (track.enabled) ? false : true));
     const micIcon = muteBtn.getElementsByTagName('i')[0];
@@ -125,6 +128,24 @@ function handleCameraClick() {
         cameraIcon.setAttribute('class', 'bi bi-camera-video-off-fill');
         cameraOff = true;
     }
+
+    // Right Click Div
+    const RC_Camera_muteClick = document.getElementById('RC_Camera_muteClick');
+    RC_Camera_muteClick.innerText = (cameraOff) ? '카메라 켜기' : '카메라 끄기';
+    right_click_camera.hidden = true;
+}
+
+main.addEventListener('click', (e) => {
+    if(e.path.indexOf(right_click_camera) == -1) {
+        right_click_camera.hidden = true;
+    }
+})
+
+function handleCameraRightClick(e) {
+    e.preventDefault();
+    right_click_camera.hidden = false;
+    right_click_camera.style.top = e.clientY + 'px';
+    right_click_camera.style.left = e.clientX + 'px';
 }
 
 // Solving mic errors when camera change
@@ -161,6 +182,7 @@ async function handleCameraChange() {
 
 muteBtn.addEventListener("click", handleMuteClick);
 cameraBtn.addEventListener("click", handleCameraClick);
+cameraBtn.addEventListener('contextmenu', handleCameraRightClick, false);
 camerasSelect.addEventListener("input", handleCameraChange);
 
 // Form
@@ -312,7 +334,7 @@ function capturePhoto() {
     var image = canvas.toDataURL('image/png');
     // photo.setAttribute('src', data);
     // console.log(data);
-    socket.emit("signImage", {userImage: image, userId: userId}); // Emit base64 Image
+    socket.emit("signImage", {userImage: image, userId: userId, roomName: roomName}); // Emit base64 Image
 }
 
 // setInterval(capturePhoto, 20); // 무한촬영
