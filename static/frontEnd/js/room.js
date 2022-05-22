@@ -309,10 +309,10 @@ function capturePhoto() {
     canvas.height = 300;
     context.drawImage(myFace, 0, 0, 400, 300);
 
-    var data = canvas.toDataURL('image/png');
+    var image = canvas.toDataURL('image/png');
     // photo.setAttribute('src', data);
     // console.log(data);
-    socket.emit("signImage", data); // Emit base64 Image
+    socket.emit("signImage", {userImage: image, userId: userId}); // Emit base64 Image
 }
 
 // setInterval(capturePhoto, 20); // 무한촬영

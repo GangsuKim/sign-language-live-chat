@@ -82,13 +82,27 @@ var pastData = '';
 socket.on("streamTTS", data => {
     if (pastData !== data) {
         if (data['userName'] == userName) { // Show TTS text box for my self
-            appendMyChat('🗣️' + data['userText']);
+            // appendMyChat('🗣️' + data['userText']);
+            appenMyViewChat(data['userText'], 'stt');
         } else { // Show TTS text box from others
             appendReceiveUserChat(data, 'tts');
         }
         pastData = data;
     }
 });
+
+socket.on("streamSIGN", data => {
+    console.log(data);
+});
+
+function appenMyViewChat(text, type) {
+    const my_view_inner_chat = document.getElementById('my_view_inner_chat');
+    if(type == 'stt') {
+        my_view_inner_chat.innerHTML += '<div class="box stt">' + text + '</div>'
+    } else {
+        my_view_inner_chat.innerHTML += '<div class="box sign">' + text + '</div>'
+    }
+}
 
 // Chat bar hide
 const rbTopBar = document.getElementsByClassName('rbTopBar')[0];

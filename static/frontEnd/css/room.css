@@ -98,6 +98,7 @@ main {
     border-radius: 5px;
     color: white;
     margin-bottom: 5px;
+    margin-left: 10px;
 }
 
 .chat_td_inner > .stt {

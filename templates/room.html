@@ -53,9 +53,9 @@
                                 </div>
                             </td>
                             <td class="chatTD">
-                                <div class="chat_td_inner">
-                                    <div class="box stt">STT 텍스트</div>
-                                    <div class="box sign">수화 텍스트</div>
+                                <div class="chat_td_inner" id="my_view_inner_chat">
+                                    <!-- <div class="box stt">STT 텍스트</div>
+                                    <div class="box sign">수화 텍스트</div> -->
                                 </div>
                             </td>
                         </tr>
@@ -87,7 +87,11 @@
                     </tbody>
                 </table>
             </div>
-
+            
+            <div class="imgDiv" hidden>
+                <canvas id="canvas" hidden></canvas>
+                <img id="photo" width="400" height="300">
+            </div>
         </div>
 
         <!-- Chat DIV -->
