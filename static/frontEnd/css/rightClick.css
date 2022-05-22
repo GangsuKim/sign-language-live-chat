@@ -20,9 +20,10 @@
     background-color: rgb(247, 247, 247);
 }
 
-.cameraRightclickDiv > select {
+.cameraRightclickDiv > select, option {
     margin: 10px 10px 10px 5px;
     padding: 5px;
     border-radius: 10px;
+    cursor: pointer;
 }
 

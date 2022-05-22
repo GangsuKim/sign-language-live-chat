@@ -118,12 +118,19 @@
                 <!-- <div class="statusMessage">
                         김강수 님이 들어왔습니다.
                     </div> -->
+
+                <div class="fileMessage">
+                    <a id="fileName" style="margin-top: 5px; margin-left: 10px; display: inline-block;">ABC.txt</a><br>
+                    <a id="size">Size 10 MB</a>
+                    <div class="downloadBtn"></div>
+                </div>
             </div>
 
             <div id="chatInputDiv">
                 <div id="attatch_div">
                     <a id="toggleSpeach" hidden><i class="bi bi-megaphone"></i></a>
                     <a id="sendFile"><i class="bi bi-paperclip"></i></a>
+                    <input type="file" name="uploadFile" id="uploadFile" hidden>
                 </div>
                 <form id="chatForm">
                     <textarea name="userChat" id="userChat" cols="30" rows="6"></textarea>
@@ -146,6 +153,7 @@
     <script src="./static/frontEnd/js/chats.js"></script>
     <script src="./static/frontEnd/js/tts.js"></script>
     <script src="./static/frontEnd/js/handler.js"></script>
+    <script src="./static/frontEnd/js/sendFiles.js"></script>
 </body>
 
 </html>

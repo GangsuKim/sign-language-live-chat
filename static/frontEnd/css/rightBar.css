@@ -170,3 +170,33 @@
     margin: 5px 20px;
     border-radius: 20px;
 }
+
+/* File box */
+.fileMessage {
+    position: relative;
+    margin: 10px;
+    max-width: 80%;
+    height: 60px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(128, 128, 128);
+}
+
+.fileMessage > #size {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 90%;
+    color: rgb(99, 99, 99);
+}
+
+.fileMessage > .downloadBtn {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    right: 20px;
+    top: 15px;
+}
