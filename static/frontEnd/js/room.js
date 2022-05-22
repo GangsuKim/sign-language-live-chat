@@ -34,12 +34,22 @@ async function getCameras() { // 카메라의 목록 불러오기
         cameras.forEach(camera => {
             const option = document.createElement("option");
             option.value = camera.deviceId;
-            option.innerText = camera.label;
+            option.innerText = '[기본] ' + camera.label.split(' (')[0];
             if (currentCamera.label === camera.label) {
                 option.selected = true;
             }
             camerasSelect.appendChild(option);
         });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function getAudios() { // 오디오 목록 불러오기
+    try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const audios = devices.filter(device => device.kind == "audioinput");
+        console.log(audios);
     } catch (e) {
         console.log(e);
     }

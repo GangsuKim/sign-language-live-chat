@@ -7,7 +7,7 @@
     border-radius: 10px;
 }
 
-.cameraRightclickDiv > #RC_Camera_muteClick {
+.cameraRightclickDiv > div {
     margin-top: 10px;
     height: 30px;
     line-height: 30px;
@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.cameraRightclickDiv > #RC_Camera_muteClick:hover {
+.cameraRightclickDiv > div:hover {
     background-color: rgb(247, 247, 247);
 }
 
