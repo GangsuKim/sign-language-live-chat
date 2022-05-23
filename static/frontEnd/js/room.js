@@ -84,36 +84,42 @@ async function isAudioExist() {
     return micCnt == 0 ? false : true;
 }
 
-async function getMeida(deviceId) {
+async function getMeida(deviceId, audioID) {
     var audioTF = true;
     if (!isAudioExist()) {
         audioTF = false;
     }
 
-    const initialConstreins = {
-        audio: audioTF,
-        video: {
-            facingMode: "user"
-        },
-    };
+    // NEW
+    let audioConst = audioTF;
+    let videoConst = {facingMode: "user"};
 
-    const cameraConstreins = {
-        audio: audioTF,
-        video: {
-            deviceId: {
-                exact: deviceId
-            }
-        },
+    if(deviceId) {
+        audioConst = {deviceId: {exact: audioID}};
+    }
+     
+    if(audioID) {
+        videoConst = {deviceId: {exact: deviceId}};
+    }
+
+    const univConstreins = {
+        audio: audioConst,
+        video: videoConst,
     }
 
     try {
-        myStream = await navigator.mediaDevices.getUserMedia(
-            deviceId ? cameraConstreins : initialConstreins
-        )
+        // myStream = await navigator.mediaDevices.getUserMedia(
+        //     deviceId ? cameraConstreins : initialConstreins
+        // )
+
+        myStream = await navigator.mediaDevices.getUserMedia(univConstreins);
 
         myFace.srcObject = myStream;
+
         if (!deviceId) {
             await getCameras();
+        }
+        if(!audioID) {
             await getAudios();
         }
     } catch (e) {

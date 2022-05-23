@@ -362,8 +362,6 @@ function capturePhoto() {
     socket.emit("signImage", data); // Emit base64 Image
 }
 
-// setInterval(capturePhoto, 20); // 무한촬영
-
 // User left at safari or other browsers
 function onConnectChange(event) {
     const videoFaces = call.querySelectorAll('div[class=videoBgc]');
