@@ -139,9 +139,9 @@ def onMuteChange(data, roomName):
 @socketio.on('fileUpload')
 def fileUpload(data):
     path = "./static/files/"
-    
+    # print(data)
     with open(path + data['fileNameHash'] + '_' + data['fileName'], 'wb') as f:
-        f.write(data['file'])
+        f.write(data['file']['file'])
     emit('userSendFile', data, broadcast=True, to=data['roomName'], include_self=False)
     return
 
