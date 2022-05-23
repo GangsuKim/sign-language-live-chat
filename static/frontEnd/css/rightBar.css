@@ -90,7 +90,7 @@
 
 #sendChat {
     background-color: #34ba6e;
-    width: 90px;
+    width: 4%;
     height: 90px;
     border-radius: 10px;
     display: inline-block;
@@ -117,6 +117,13 @@
 
 .myChatBox > #myNameOnChat {
     margin-right: 10px;
+}
+
+#myFileSenderName {
+    margin-right: 10px;
+    text-align: right;
+    display: block;
+    margin-bottom: -20px;
 }
 
 .myChatBox > #textArea{
@@ -173,14 +180,22 @@
 
 /* File box */
 .fileMessage {
+    float: right;
     position: relative;
     margin: 10px;
-    max-width: 80%;
+    width: 70%;
     height: 60px;
     padding: 10px;
     background-color: white;
     border-radius: 10px;
     border: 1px solid rgb(128, 128, 128);
+    margin-bottom: 1px;
+}
+
+.fileMessage > #fileName {
+    margin-top: 5px;
+    margin-left: 10px;
+    display: inline-block;
 }
 
 .fileMessage > #size {
@@ -199,4 +214,14 @@
     border-radius: 50%;
     right: 20px;
     top: 15px;
+
+    line-height: 45px;
+    text-align: center;
+
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.fileMessage > .downloadBtn:hover {
+    background-color: rgb(228, 228, 228);
 }

@@ -136,6 +136,14 @@ def onMuteChange(data, roomName):
     emit('res_onMuteChange', data, broadcast=True, to=roomName, include_self=False)
     return
 
+@socketio.on('fileUpload')
+def fileUpload(data):
+    path = "./database/files/"
+    
+    with open(path + data['fileNameHash'] + '_' + data['fileName'], 'wb') as f:
+        f.write(data['file'])
+    return
+
 @socketio.on('signImage')
 def signImage(data):
     # now = datetime.now()
