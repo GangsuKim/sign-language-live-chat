@@ -46,13 +46,13 @@
 #attatch_div {
     height: 40px;
     width: 100%;
-    line-height: 35px;
+    line-height: 40px;
     border-bottom: 1px solid rgb(170, 170, 170);
     padding: 0px 5px;
 }
 
 #attatch_div i {
-    font-size: 30px;
+    font-size: 25px;
     color: rgb(94, 94, 94);
 }
 
@@ -126,7 +126,7 @@
     margin-bottom: -20px;
 }
 
-.myChatBox > #textArea{
+.myChatBox > #textArea {
     background-color: #288651;
     max-width: 280px;
     padding: 10px 10px;
@@ -171,17 +171,21 @@
 
 .statusMessage {
     height: 25px;
+    margin: 10px 5%;
+    width: 90%;
     background-color: rgb(240, 240, 240);
     text-align: center;
     line-height: 25px;
-    margin: 5px 20px;
+    /* margin: 5px 20px; */
     border-radius: 20px;
+    position: relative;
+    display: inline-block;
 }
 
 /* File box */
 .fileMessage {
-    float: right;
     position: relative;
+    float: right;
     margin: 10px;
     width: 70%;
     height: 60px;
