@@ -6,6 +6,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'AppleSDGothicNeoEB00';
+    src: url('./fonts/AppleSDGothicNeoEB.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* UNIVERSAL */
 * {
     font-family: 'AppleSDGothicNeoM00';
@@ -165,6 +172,7 @@ html, body {
     font-size: 70px;
     text-decoration: none;
     color: black;
+    font-family: 'AppleSDGothicNeoEB00';
 }
 
 .slideDiv {

@@ -19,6 +19,7 @@ let muted = false;
 let cameraOff = false;
 let roomName, userName, userId;
 let myPeerConnection = new Object();
+let isSTTEnabled = false;
 
 // Get SID from backend
 socket.on('returnMyId', sid => {
@@ -84,6 +85,9 @@ async function isAudioExist() {
     return micCnt == 0 ? false : true;
 }
 
+let currentAudioID = '';
+let currentVideoID = '';
+
 async function getMeida(deviceId, audioID) {
     var audioTF = true;
     if (!isAudioExist()) {
@@ -94,12 +98,16 @@ async function getMeida(deviceId, audioID) {
     let audioConst = audioTF;
     let videoConst = {facingMode: "user"};
 
-    if(deviceId) {
+    if(audioID) {
         audioConst = {deviceId: {exact: audioID}};
+    } else if(currentAudioID !== '') {
+        audioConst = {deviceId: {exact: currentAudioID}};
     }
      
-    if(audioID) {
+    if(deviceId) {
         videoConst = {deviceId: {exact: deviceId}};
+    } else if(currentVideoID !== '') {
+        videoConst = {deviceId: {exact: currentVideoID}};
     }
 
     const univConstreins = {
@@ -112,16 +120,16 @@ async function getMeida(deviceId, audioID) {
 
         myFace.srcObject = myStream;
 
-        if (!deviceId) {
+        if (!deviceId && currentVideoID === '') {
             await getCameras();
         }
-        if(!audioID) {
+
+        if(!audioID && currentAudioID === '') {
             await getAudios();
         }
     } catch (e) {
         console.log(e);
     }
-    // console.log(myStream);
 }
 
 const main = document.getElementsByTagName('main')[0];
@@ -135,11 +143,11 @@ function handleMuteClick() {
     if (!muted) {
         micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
         muted = true;
-        stopReco();
+        // stopReco();
     } else {
         micIcon.setAttribute('class', 'bi bi-mic-fill');
         muted = false;
-        startReco();
+        // startReco();
     }
 
     socket.emit("onMuteChange", {muted: muted,userID: userId}, roomName);
@@ -194,6 +202,18 @@ function handleMicRightClick(e) {
     right_click_audio.style.left = e.clientX + 'px';
 }
 
+function sttToggle(obj) {
+    if (isSTTEnabled) {
+        stopReco();
+        obj.innerText = '음성인식 켜기';
+        isSTTEnabled = false;
+    } else {
+        startReco();
+        obj.innerText = '음성인식 끄기';
+        isSTTEnabled = true;
+    }
+}
+
 // Solving mic errors when camera change
 function changeOnHandle() {
     const micIcon = muteBtn.getElementsByTagName('i')[0];
@@ -217,11 +237,22 @@ function changeOnHandle() {
 }
 
 async function handleCameraChange() {
-    await getMeida(camerasSelect.value); // For my self
+    await getMeida(camerasSelect.value, null); // For my self
     const videoTrack = myStream.getVideoTracks()[0];
     Object.keys(myPeerConnection).forEach(sid => {
         const videoSender = myPeerConnection[sid].getSenders().find(sender => sender.track.kind == "video");
         videoSender.replaceTrack(videoTrack);
+    });
+    changeOnHandle();
+}
+
+async function handleAudioChange() {
+    console.log(audiosSelect.value);
+    await getMeida(null,audiosSelect.value);
+    const audioTrack = myStream.getAudioTracks()[0]; // Currnet Audio track
+    Object.keys(myPeerConnection).forEach(sid => {
+        const audioSender = myPeerConnection[sid].getSenders().find(sender => sender.track.kind == "audio");
+        audioSender.replaceTrack(audioTrack);
     });
     changeOnHandle();
 }
@@ -231,14 +262,13 @@ muteBtn.addEventListener("contextmenu", handleMicRightClick, false);
 cameraBtn.addEventListener("click", handleCameraClick);
 cameraBtn.addEventListener('contextmenu', handleCameraRightClick, false);
 camerasSelect.addEventListener("input", handleCameraChange);
+audiosSelect.addEventListener("input", handleAudioChange);
 
-// Form
-// const welcomeForm = welcome.querySelector('form');
 
 async function intiCall() {
     await getMeida();
     makeConnection(userId, userName);
-    startReco();
+    // startReco();
 }
 
 socket.on("welcome", async (data) => { // new person joined // [R-1] from 'join_room'
