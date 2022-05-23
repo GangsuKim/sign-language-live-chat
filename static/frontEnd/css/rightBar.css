@@ -196,6 +196,10 @@
     margin-bottom: 1px;
 }
 
+.fileMessage[class=other] {
+    float: left;
+}
+
 .fileMessage > #fileName {
     margin-top: 5px;
     margin-left: 10px;
