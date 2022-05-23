@@ -147,20 +147,19 @@ def fileUpload(data):
 
 @socketio.on('signImage')
 def signImage(data):
-    # now = datetime.now()
-    # path = "./images/"
+    now = datetime.now()
+    path = "./images/"
 
-    # userImage = data['userImage']
-    # userImage = userImage + '=' * (4 - len(userImage) % 4)
-    # userImage = userImage.replace('\n','')
-    # userImage = userImage.replace("data:image/png;base64,",'')
+    userImage = data['userImage']
+    userImage = userImage + '=' * (4 - len(userImage) % 4)
+    userImage = userImage.replace('\n','')
+    userImage = userImage.replace("data:image/png;base64,",'')
 
-    # image = base64.b64decode(userImage)
-    # file_name = str(now.timestamp()) + ".png"
+    image = base64.b64decode(userImage)
+    file_name = str(now.timestamp()) + ".png"
 
-    # with open(path + file_name, 'wb') as f:
-    #     f.write(image)
-    # print(data['roomName'])
+    with open(path + file_name, 'wb') as f:
+        f.write(image)
     emit('streamSIGN', {'userId': data['userId'], "userText" : "hello"}, broadcast=True, to=data['roomName'], include_self=True)
     return
 

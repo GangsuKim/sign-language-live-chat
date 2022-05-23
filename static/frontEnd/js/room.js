@@ -7,6 +7,7 @@ const muteBtn = document.getElementById("myAudioStat"); //
 const cameraBtn = document.getElementById("myVideoStat"); //
 
 const camerasSelect = document.getElementById("cameras");
+const audiosSelect = document.getElementById("audios");
 const welcome = document.getElementById("welcome");
 const call = document.getElementById("call");
 const footBar = document.getElementById('footBar');
@@ -28,15 +29,17 @@ async function getCameras() { // 카메라의 목록 불러오기
     try {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const cameras = devices.filter(device => device.kind == "videoinput");
-        // const mics = devices.filter(device => device.kind == "videoinput");
-        console.log(devices);
         const currentCamera = myStream.getVideoTracks()[0];
+        // console.log(devices);
+        var ticker = 0;
         cameras.forEach(camera => {
             const option = document.createElement("option");
             option.value = camera.deviceId;
-            option.innerText = '[기본] ' + camera.label.split(' (')[0];
+            option.innerText = camera.label.split(' (')[0];
+
             if (currentCamera.label === camera.label) {
                 option.selected = true;
+                option.innerText = '[기본] ' + option.innerText;
             }
             camerasSelect.appendChild(option);
         });
@@ -49,7 +52,20 @@ async function getAudios() { // 오디오 목록 불러오기
     try {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const audios = devices.filter(device => device.kind == "audioinput");
+        const currentAudio = myStream.getAudioTracks()[0];
         console.log(audios);
+        var ticker = 0;
+        audios.forEach(audio => {
+            const option = document.createElement("option");
+            option.value = audio.deviceId;
+            option.innerText = audio.label.split(' (')[0];
+            
+            if (currentAudio.label === audio.label) {
+                option.selected = true;
+                option.innerText = '[기본] ' + option.innerText;
+            }
+            audiosSelect.appendChild(option);
+        })
     } catch (e) {
         console.log(e);
     }
@@ -98,6 +114,7 @@ async function getMeida(deviceId) {
         myFace.srcObject = myStream;
         if (!deviceId) {
             await getCameras();
+            await getAudios();
         }
     } catch (e) {
         console.log(e);
@@ -107,6 +124,7 @@ async function getMeida(deviceId) {
 
 const main = document.getElementsByTagName('main')[0];
 const right_click_camera = document.getElementById('right_click_camera');
+const right_click_audio = document.getElementById('right_click_audio');
 
 function handleMuteClick() {
     myStream.getAudioTracks().forEach((track) => (track.enabled = (track.enabled) ? false : true));
@@ -123,6 +141,9 @@ function handleMuteClick() {
     }
 
     socket.emit("onMuteChange", {muted: muted,userID: userId}, roomName);
+    const RC_audio_muteClick = document.getElementById('RC_audio_muteClick');
+    RC_audio_muteClick.innerText = (muted) ? '마이크 음소거 해제' : '마이크 음소거';
+    right_click_audio.hidden = true;
 }
 
 function handleCameraClick() {
@@ -149,13 +170,26 @@ main.addEventListener('click', (e) => {
     if(e.path.indexOf(right_click_camera) == -1) {
         right_click_camera.hidden = true;
     }
+    
+    if (e.path.indexOf(right_click_audio) == -1) {
+        right_click_audio.hidden = true;
+    }
 })
 
 function handleCameraRightClick(e) {
     e.preventDefault();
     right_click_camera.hidden = false;
+    right_click_audio.hidden = true;
     right_click_camera.style.top = e.clientY + 'px';
     right_click_camera.style.left = e.clientX + 'px';
+}
+
+function handleMicRightClick(e) {
+    e.preventDefault();
+    right_click_audio.hidden = false;
+    right_click_camera.hidden = true;
+    right_click_audio.style.top = e.clientY + 'px';
+    right_click_audio.style.left = e.clientX + 'px';
 }
 
 // Solving mic errors when camera change
@@ -191,6 +225,7 @@ async function handleCameraChange() {
 }
 
 muteBtn.addEventListener("click", handleMuteClick);
+muteBtn.addEventListener("contextmenu", handleMicRightClick, false);
 cameraBtn.addEventListener("click", handleCameraClick);
 cameraBtn.addEventListener('contextmenu', handleCameraRightClick, false);
 camerasSelect.addEventListener("input", handleCameraChange);

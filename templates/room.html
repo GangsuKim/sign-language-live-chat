@@ -141,10 +141,16 @@
         </div>
         <a class="closeBar" id="open_bar" onclick="closeBarToggle()" hidden><i class="bi bi-list"></i></a>
 
-        <div class="cameraRightclickDiv" id="right_click_camera" hidden>
+        <div class="RightclickDiv" id="right_click_camera" hidden>
             <div id="RC_Camera_muteClick" onclick="handleCameraClick()">카메라 끄기</div>
             <div id="RC_sign_toggle">수화 인식 켜기</div>
             <select id="cameras"></select>
+        </div>
+
+        <div class="RightclickDiv" id="right_click_audio" hidden>
+            <div id="RC_audio_muteClick" onclick="handleMuteClick()">마이크 음소거</div>
+            <div id="RC_stt_toggle">음성인식 켜기</div>
+            <select id="audios"></select>
         </div>
     </main>
 

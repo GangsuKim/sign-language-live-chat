@@ -1,4 +1,4 @@
-.cameraRightclickDiv {
+.RightclickDiv {
     position: absolute;
     z-index: 10;
     background-color: rgb(223, 223, 223);
@@ -7,7 +7,7 @@
     border-radius: 10px;
 }
 
-.cameraRightclickDiv > div {
+.RightclickDiv > div {
     margin-top: 10px;
     height: 30px;
     line-height: 30px;
@@ -16,11 +16,11 @@
     cursor: pointer;
 }
 
-.cameraRightclickDiv > div:hover {
+.RightclickDiv > div:hover {
     background-color: rgb(247, 247, 247);
 }
 
-.cameraRightclickDiv > select, option {
+.RightclickDiv > select, option {
     margin: 10px 10px 10px 5px;
     padding: 5px;
     border-radius: 10px;
