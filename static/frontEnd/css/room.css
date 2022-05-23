@@ -1,4 +1,20 @@
+@font-face {
+    font-family: 'AppleSDGothicNeoM00';
+    src: url('./fonts/AppleSDGothicNeoM.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AppleSDGothicNeoL00';
+    src: url('../fonts/AppleSDGothicNeoL.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 * {
+    font-family: 'AppleSDGothicNeoL00';
     margin: 0;
     padding: 0;
 }

@@ -99,6 +99,7 @@
     text-align: center;
     line-height: 92px;
     border: none;
+    font-size: 25px;
 }
 
 #sendChat:hover {
