@@ -108,10 +108,6 @@ async function getMeida(deviceId, audioID) {
     }
 
     try {
-        // myStream = await navigator.mediaDevices.getUserMedia(
-        //     deviceId ? cameraConstreins : initialConstreins
-        // )
-
         myStream = await navigator.mediaDevices.getUserMedia(univConstreins);
 
         myFace.srcObject = myStream;
