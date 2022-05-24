@@ -17,15 +17,12 @@ recognition.addEventListener("result", (e) => {
     interimTranscript = "";
     for (let i = e.resultIndex, len = e.results.length; i < len; i++) {
         transcript = e.results[i][0].transcript;
-        // console.log(transcript);
         if (e.results[i].isFinal) {
             speechToText += transcript;
         } else {
             interimTranscript += transcript;
         }
     }
-    // document.querySelector(".para").innerHTML = speechToText + interimTranscript;
-    // console.log(speechToText + interimTranscript);
 });
 
 // STT 시작

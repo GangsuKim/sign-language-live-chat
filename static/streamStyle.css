@@ -23,7 +23,6 @@ nav {
 }
 
 #welcome {
-    /* background-color: black; */
     height: 500px;
     width: 100%;
     margin-top: 100px;
@@ -49,7 +48,6 @@ nav {
 /* User peerFace */
 .peerFace {
     width: 400px;
-    /* height: 400px; */
 }
 
 .footBar {

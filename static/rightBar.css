@@ -1,14 +1,10 @@
 .rightBar {
     background-color: white;
-    /* border-left: 1px solid rgb(218, 218, 218); */
     width: 400px;
     height: 100%;
     position: fixed;
     right: 0;
     top: 0;
-    /* z-index: -1; */
-
-    /* display: flex; */
     flex-direction: column;
 
     box-shadow: -10px 0px 17px 0px #dfdfdf85;
@@ -113,7 +109,6 @@
 
 .receiveChatBox > #textArea{
     background-color: rgb(92, 92, 221);
-    /* width: fit-content; */
     max-width: 90%;
     padding: 10px 10px;
     color: white;

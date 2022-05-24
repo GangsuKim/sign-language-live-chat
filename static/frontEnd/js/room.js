@@ -2,10 +2,8 @@
 const socket = io(); // Socket.io 
 
 const myFace = document.getElementById("myFace"); //
-
 const muteBtn = document.getElementById("myAudioStat"); //
 const cameraBtn = document.getElementById("myVideoStat"); //
-
 const camerasSelect = document.getElementById("cameras");
 const audiosSelect = document.getElementById("audios");
 const welcome = document.getElementById("welcome");
@@ -31,8 +29,6 @@ async function getCameras() { // 카메라의 목록 불러오기
         const devices = await navigator.mediaDevices.enumerateDevices();
         const cameras = devices.filter(device => device.kind == "videoinput");
         const currentCamera = myStream.getVideoTracks()[0];
-        // console.log(devices);
-        var ticker = 0;
         cameras.forEach(camera => {
             const option = document.createElement("option");
             option.value = camera.deviceId;
@@ -143,11 +139,9 @@ function handleMuteClick() {
     if (!muted) {
         micIcon.setAttribute('class', 'bi bi-mic-mute-fill');
         muted = true;
-        // stopReco();
     } else {
         micIcon.setAttribute('class', 'bi bi-mic-fill');
         muted = false;
-        // startReco();
     }
 
     socket.emit("onMuteChange", {muted: muted,userID: userId}, roomName);
@@ -356,11 +350,7 @@ function handleIce(data) {
 }
 
 function handleTrack(data) {
-    console.log("handle track")
-    // const face = document.querySelector('video[id=' + this['userID'] + ']');
-    // face.srcObject = data.streams[0];
-
-    // const isExist = !!document.querySelector('video[id=' + this['userID'] + ']');
+    console.log("handle track");
     let work = true;
     const videos = document.getElementsByTagName('video');
     console.log(videos);
@@ -451,7 +441,6 @@ async function initRoomJoin() {
     }); // [S-1]
 
     roomName = dataRoomName; // 방의 이름을 변수에 저장
-    // rightBar.style.display = 'flex'; // Show chatbox
 }
 
 initRoomJoin();
