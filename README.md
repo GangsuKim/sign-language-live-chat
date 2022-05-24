@@ -17,18 +17,6 @@
 |회원가입|Front+Back|100%|
 |채팅방 화면|Front+Back|100%|
 
-## 개발 목표
- - 1:N 화상 회의 구현 (Function) <- 아마 불가능
- - 채팅방 디자인 구현 (진행중)
-
-## 주의
- - Link를 통한 접속은 같은 네트워크 내에서만 가능하다.
-
-## 문제사항
- - Ngrok를 통한 외부망 배포시 RTCPeer를 이용한 화상통화가 안됨
- - TCP (내부망) 통신일때는 정상적으로 작동하나, UDP 통신 시에 작동이 안됨
- - STUN 서버가 아닌 TURN 서버를 이용해야 하는 것 같다
-
 ## install libs
 conda install -c conda-forge pyngrok  
 conda install -c conda-forge flask-socketio  
@@ -38,4 +26,4 @@ conda install -c anaconda flask
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white"/> 
 
 ## 라이브러리
-<img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=Flask&logoColor=white"/> <img src="https://img.shields.io/badge/socket.io-010101?style=flat-square&logo=socket.io&logoColor=white"/> <img src="https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jQuery&logoColor=white"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=flat-square&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/ngrok-1F1E37?style=flat-square&logo=ngrok&logoColor=white"/>
+<img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=Flask&logoColor=white"/> <img src="https://img.shields.io/badge/socket.io-010101?style=flat-square&logo=socket.io&logoColor=white"/> <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=Bootstrap&logoColor=white"/> <img src="https://img.shields.io/badge/WebRTC-333333?style=flat-square&logo=WebRTC&logoColor=white"/> <img src="https://img.shields.io/badge/ngrok-1F1E37?style=flat-square&logo=ngrok&logoColor=white"/>
