@@ -206,6 +206,7 @@ function sttToggle(obj) {
         obj.innerText = '음성인식 끄기';
         isSTTEnabled = true;
     }
+    right_click_audio.hidden = true;
 }
 
 // Solving mic errors when camera change
@@ -399,12 +400,24 @@ function capturePhoto() {
     context.drawImage(myFace, 0, 0, 400, 300);
 
     var image = canvas.toDataURL('image/png');
-    // photo.setAttribute('src', data);
-    // console.log(data);
     socket.emit("signImage", {userImage: image, userId: userId, roomName: roomName}); // Emit base64 Image
 }
 
-// setInterval(capturePhoto, 20); // 무한촬영
+let isSignON = false;
+let capturePhotoInterval;
+
+function signToggle(obj) {
+    if(isSignON) {
+        clearInterval(capturePhotoInterval);
+        obj.innerHTML = '수화 인식 켜기';
+        isSignON = false;
+    } else {
+        capturePhotoInterval = setInterval(capturePhoto, 300);
+        obj.innerHTML = '수화 인식 끄기';
+        isSignON = true;
+    }
+    right_click_camera.hidden = true;
+}
 
 // User left at safari or other browsers
 function onConnectChange(event) {
