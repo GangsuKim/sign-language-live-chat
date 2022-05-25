@@ -12,7 +12,6 @@
 |Work|Part|Percent|
 |:---|:---:|:---:|
 |메인 화면 1|Front|100%|
-|메인 화면 2,3|Front|0%|
 |로그인|Front+Back|100%|
 |회원가입|Front+Back|100%|
 |채팅방 화면|Front+Back|100%|
