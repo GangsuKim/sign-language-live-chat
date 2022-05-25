@@ -23,6 +23,7 @@ def hello_world():
     # global serverActive
     # if not serverActive:
     #     conf.get_default().auth_token = "29FM13u5ZEJ3W3XG7V2I1qFeuef_sQ7UKU6wUQDSKaNY9P8A"
+    #     conf.get_default().region = "jp"
     #     http_tunnel = ngrok.connect(5000)
     #     tunnels = ngrok.get_tunnels()
 
