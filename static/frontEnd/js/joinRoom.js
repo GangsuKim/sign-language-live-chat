@@ -21,16 +21,6 @@ joinRoomBtn.addEventListener('click', function () {
             // const promptUserName = prompt('사용자 이름을 입력해 주세요');
             inputUserName.hidden = false;
             return;
-
-            if (!promptUserName) {
-                alert('비회원은 사용자 이름을 입력하셔야 이용이 가능합니다.')
-                return;
-            }
-
-            data = {
-                'name': promptUserName,
-                'room': joinRoomName.value
-            }
         }
 
         const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), privateKey).toString();
@@ -40,6 +30,7 @@ joinRoomBtn.addEventListener('click', function () {
 
 closeBtnForName.addEventListener('click', () => {
     inputUserName.hidden = true;
+    inputUserName.value = '';
     alert('비회원은 사용자 이름을 입력하셔야 이용이 가능합니다.');
 })
 

@@ -447,6 +447,7 @@ async function initRoomJoin() {
     myName.innerText = userName;
     await intiCall();
 
+
     socket.emit("join_room", {
         roomName: dataRoomName,
         userID: userId,
@@ -454,6 +455,7 @@ async function initRoomJoin() {
     }); // [S-1]
 
     roomName = dataRoomName; // 방의 이름을 변수에 저장
+    document.title = '대화방 ' + roomName + ' | SIGN';
 }
 
 initRoomJoin();
