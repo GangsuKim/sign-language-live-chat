@@ -42,6 +42,10 @@ def signUp():
 def room():
     return render_template('room.html')
 
+@app.route("/story")
+def story():
+    return render_template('ourStory.html')
+
 # SOCKET.IO
 @socketio.on('join_room')
 def joinRoom(data):
