@@ -96,7 +96,7 @@ socket.on("streamSIGN", data => {
     if(data['userId'] == userId) {
         appenMyViewChat(data['userText'], 'sign');
     } else {
-        appendUserViewChat('HIHI', 'sign', data['userId']);
+        appendUserViewChat(data['userText'], 'sign', data['userId']);
     }
 });
 
