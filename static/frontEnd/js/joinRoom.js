@@ -58,3 +58,9 @@ submitUserName.addEventListener('click', () => {
         inputUserName.focus();
     }
 });
+
+const startNow = document.getElementById('startNow');
+
+startNow.onclick = function () {
+    joinRoomName.focus();
+}

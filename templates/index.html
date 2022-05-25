@@ -10,6 +10,7 @@
     <!-- Local Style Sheet -->
     <link rel="stylesheet" href="./static/frontEnd/css/style.css">
     <link rel="stylesheet" href="./static/frontEnd/css/joinRoom.css">
+    <link rel="stylesheet" href="./static/frontEnd/css/newMain.css">
 
     <!-- SocketIO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
@@ -43,17 +44,17 @@
     </div>
 
     <div class="slideDiv" id="slideDiv">
-        <div class="inner">
-            <div class="mainText" id="mainText">
-                <a>또 하나의 언어,</a> <img src="./static/frontEnd/images/TopRight_NEW.png" alt="topRight" width="150px"
-                    id="topRight"> <br>
-                <img src="./static/frontEnd/images/topLeft.png" alt="topLeft" width="120px" id="topLeft"> <a
-                    style="background-color: white; font-size: 3.5vw;">수어</a><br><br><br><br>
-                <a>몸짓으로</a><br>
-                <a>눈으로</a><br>
-                <img src="./static/frontEnd/images/botLeft.png" alt="botLeft" width="120px" id="botLeft">
-                <img src="./static/frontEnd/images/topLeft.png" alt="botRight" width="120px" id="botRight">
-                <a style="background-color: white;">소통하는 우리</a><br>
+        <div class="inner" style="width: 60%; position: relative;">
+            <img src="./static/frontEnd/images/rightMain.png" alt="Leaf" id="rightMain">
+            <img src="./static/frontEnd/images/leftLeaf.png" alt="Leaf" id="leftLeaf">
+            <img src="./static/frontEnd/images/leftLeaf.png" alt="Leaf" id="leftLeaf2">
+            <div class="mainText" id="mainText" style="padding: 50px 0px; text-align: left;">
+                <img src="./static/frontEnd/images/video.png" alt="Video chat monitor" id="vMonitor">
+                <div class="rightInner">
+                    <a id="mainTitle">인공지능 기반 <br>수어번역 화상 플랫폼</a> <br>
+                    <a id="subTitle">Sign Language Translation Video Platform</a> <br>
+                    <img src="./static/frontEnd/images/mainLogo.png" alt="MainLogo" width="200px">
+                </div>
             </div>
         </div>
     </div>
@@ -62,184 +63,41 @@
         <div class="inner">
             <!-- Article 1 -->
             <div class="articleOne">
-                <div class="imgOne">
-                    <img src="./static/frontEnd/images/001.png" width="400px" alt="Monitor" id="monitorImg">
+                <!-- <div class="aOLeft">
+                    <a id="mainTitle">'손으로 전하는 목소리' <strong>수어</strong></a><br>
+                    <a id="subTitle">소리가 아닌 시각으로 소통하는 또 하나의 언어</a>
+                </div> -->
+
+                <div class="aORight">
+                    <div>
+                        <a id="mainTitle">'손으로 전하는 목소리' <strong>수어</strong></a><br>
+                        <a id="subTitle">소리가 아닌 시각으로 소통하는 또 하나의 언어</a><br>
+                        <img src="./static/frontEnd/images/mainLogo.png" alt="MAIN LOGO" width="60%">
+                        <br>
+                        <div id="startNow">지금 바로 시작하기</div>
+                    </div>
+                    <img id="mockupImg" src="./static/frontEnd/images/mockup.png" alt="Mockup image" width="100%">
                 </div>
-                <p id="articleTitle">"온라인 강의에 청각장애인 학생 지원책 미흡" 인권위 진정</p>
-                <p id="articleValue">
-                    코로나19 우려로 각 대학이 온라인 강의로 수업을 대체하고 있는 가운데, 장애인 단체들이 청각장애인(농인) 학생들의 학습 환경 개선을 요구하며 국가인권위원회에 진정을
-                    냈다.<br><br>
-                    장애의 벽을 허무는 사람들·한국농아인협회 등 6개 단체는 20일 서울 중구 인권위 앞에서 기자회견을 열고 "모든 강의에 자막과 수어 통역을 의무 제공하도록 하는 지침을
-                    만들어달라"고
-                    교육부에 촉구했다.<br><br>
-                    이날 진정인으로 기자회견에 참석한 나사렛대학교 구윤호(21) 학생은 "학교에서 강의 영상에 자막을 삽입하고, 유튜브에 수어 통역을 올려주는 등 지원 노력을 하고
-                    있다"면서도 "자막 지원이 늦어 비장애 학생에 비해 진도가 뒤처진다"고 주장했다.
-                    <br>.<br>.<br>.<br>
-                    연합 뉴스 - 장우리 기자
-                </p>
                 <div class="designLiner"></div>
             </div>
 
             <!-- Article 2 -->
             <div class="articleTwo">
-                <p id="articleTitle">"온라인 강의에 청각장애인 학생 지원책 미흡" 인권위 진정</p>
-                <div id="articleValue">
-                    코로나19로 온라인 비대면 교육이 활성화되고 있다. <br>
-                    하지만 디지털에 익숙한 비장애인과 달리 청각장애인에게 온라인 교육은 또 다른 장애다.<br>
-                    <br>
-                    일반학교 통합교육 환경에서 공부하는 청각장애 학생(78%)에게 <br>
-                    수어·자막 등 학습 지원이 되지 않아 청각장애 학생들은 교육의 사각지대에 방치되고 있다.<br>
-                    <br>
-                    EBS는 장애인 대상 홈페이지를 별도로 서비스하고 있다.<br>
-                    하지만 EBS 청각장애 강의는 대부분 자막만 제공된다.<br>
-                    수어는 평생교육의 24개 프로그램에만 있을 뿐이다.<br>
-                    청각장애 학생들은 학원 등 사교육 기회가 제한적이기 때문에<br>
-                    공교육이 제대로 이뤄지지 않으면 비장애 학생들과의 격차는 더 벌어질 수밖에 없다.<br>
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br>
-                    한경 오피니언 - 임진이 <한국복지대 교수>
+                <div class="aORight">
+                    <div style="text-align: center; margin-left: 100px;">
+                        <a id="mainTitle">우리들의 이야기</a><br>
+                        <a id="subTitle">수화와 관련된 기사들</a><br>
+                        <br>
+                        <div id="readNow" onclick="location.href='./story'">지금 읽으러 가기</div>
+                    </div>
+                    <img id="mockupImg" src="./static/frontEnd/images/writing.png" alt="Writing image" width="50%">
                 </div>
-                <img src="./static/frontEnd/images/001.png" alt="Monitor" width="500px">
-                <div class="designLiner"></div>
-            </div>
-
-            <!-- Article 3 -->
-            <div class="articleOne" style="margin-top: 60px;">
-                <div class="imgOne">
-                    <img src="./static/frontEnd/images/001.png" width="400px" alt="Monitor" id="monitorImg">
-                </div>
-                <p id="articleTitle">장애 학생 학습권 직격탄…"올해는 나아질까요"</p>
-                <p id="articleValue">
-                    <이은주 / 청각장애 학생 학부모> <br>
-                        "선생님들도 하고자 하는 열의가 있지만, 준비상황이 부족한 게 많이 있고 <br>
-                        1년 동안 많이 발전됐다고 생각을 안 하거든요. 쌍방향 수업하는 것도 몇 번 되지도 않았던 것 같고요. <br><br>
-
-                        장애 학생에게도 내실 있는 원격 수업을 보장하겠다, 지난해 교육부가 했던 약속입니다.<br><br>
-
-                        <유은혜 / 교육부 장관(지난해 4월)><br>
-                            "온라인 개학을 위해서 시청각 장애 학생에게는 원격 수업 자막이나 수어, 점자 등을 제공하고,<br>
-                            발달 장애 학생들에게는 다양한 형태의 원격 수업과 더불어서 방문 교육을 병행해서…"<br><br>
-
-                            그러나 장애 학생을 위한 온라인 학습 자료는 두 학기가 지나도록 제대로 마련되지 않았습니다.<br><br>
-
-                            시각 장애 학생을 위한 화면해설 자료도 중학 과정에선 지난해 단 한 건도 올라오지 않았습니다.<br>
-                            실제 교육부가 실시한 설문조사를 보면<br>
-                            특수학교 교사와 학생, 학부모들은 콘텐츠 부족을 원격 수업의 가장 큰 어려움으로 꼽았습니다.<br><br>
-
-                            .
-                            <br>
-                            .
-                            <br>
-                            .
-                            <br><br>
-                            연합뉴스 TV - 정인용, 방준혁 기자
-                </p>
-                <div class="designLiner"></div>
-            </div>
-
-            <!-- Article 4 -->
-            <div class="articleTwo">
-                <p id="articleTitle">"온라인 수업, 학습권 침해 당하는 장애대학생들"</p>
-                <div id="articleValue">
-                    코로나19 사태로 대학교 수업이 전격/일부 온라인화 되면서 문제가 더욱 불거졌다.<br>
-                    예를 들어, 영상으로 혼자 수강을 해야하는 청각장애 학생들은 자막이 필요하지만,<br>
-                    다수의 대학교에서는 그들에게 자동생성 자막을 사용하라는 공지가 전부였다.<br>
-                    자동생성 자막이 현재의 기술로는 내용 전달 면에 있어서 아직 턱 없이 부족하기 때문에<br>
-                    해당 청각장애 학생들의 학업에 방해가 될 수도 있다.<br>
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br>
-
-                    한국은 사상 초유의 코로나19 사태에 전세계적으로 가장 빨리 대응한 국가가 되었지만,<br>
-                    장애학생들의 상황은 개선되지 못했다.<br>
-                    현재 시.청각장애학생들에게 제공되는 지원은 최소한에 불과하며,<br>
-                    몇개월에 걸쳐 지속된 끊임없는 항의에도 불구하고 정부는 아직까지도 별다른 성과를 보여주지 못하고 있다.<br>
-                    시간이 지체될 수록 장애학생들이 가장 기본적인 인권조차 보호받지 못한 채 보내는 날들만 늘어갈 뿐이다.<br>
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br>
-                    <br>
-                    Amnesty PLUS - Steven Park & Bennie Ko & Spany Noh
-                </div>
-                <img src="./static/frontEnd/images/001.png" alt="Monitor" width="500px">
-                <div class="designLiner"></div>
-            </div>
-
-            <!-- Article 5 -->
-            <div class="articleOne" style="margin-top: 60px;">
-                <div class="imgOne">
-                    <img src="./static/frontEnd/images/001.png" width="400px" alt="Monitor" id="monitorImg">
-                </div>
-                <p id="articleTitle">장애대학생 온라인 줌 강의 '산 넘어 산'</p>
-                <p id="articleValue">
-                    수강신청 난관…편의 부족 시험·과제 ‘끙끙’<br>
-                    “학습권 보장” 비대면 교육운영 매뉴얼 필요<br><br>
-
-                    청각장애학생들은 온라인 강의에 수어통역 제공이 없어 ‘그림의 떡’인 상황에 놓이기도 했으며,<br>
-                    온라인으로 치르는 시험과정에서도 온라인플랫폼에 시간제한이 걸려있어<br>
-                    연장 시간을 보장받지 못하는 경우도 나타나기도 했다.<br><br>
-
-                    과제 또한 주로 pdf 형식의 논문을 읽고 써야 해서 시각장애학생들은<br>
-                    비장애 학생보다 더 많은 시간을 투자하기도, 청각장애학생은 수어 속기록을 받기까지의 시간이 걸려<br>
-                    과제제출기한을 맞추기 어렵기도 하다.<br>
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br>
-                    <br>
-                    에이블 뉴스 - 이슬기 기자
-                </p>
-                <div class="designLiner"></div>
-            </div>
-
-            <!-- Article 6 -->
-            <div class="articleTwo">
-                <p id="articleTitle">기본 인프라도 부족한데… 코로나19 장기화로 어려움 겪는 장애대학생들</p>
-                <div id="articleValue">
-                    ■장애 대학생 수요 증가세…아직 갈 길 먼 인프라 확충<br>
-                    학습 수요자는 늘어가지만 인프라는 아직도 충분치 않다. 장애 대학생의 경우 입학 순간부터 어려움에 맞닥뜨린다.<br>
-                    9일 교육부가 발표한 장애인 고등교육지원 종합방안에서도 대학의 장애학생 지원기반 부실을 지적하고 있다.<br>
-                    고등학교 단계까지는 국가나 지자체의 전반적인 지원이 이뤄지는 반면<br>
-                    대학에서 대학 또는 개인의 부담으로 전환된다는 것이다.<br>
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br>
-                    <br>
-                    ■코로나19로 부각된 장애 대학생 학습권<br>
-                    기본적인 인프라가 부족한 상황에다 코로나19가 장기화 되면서 장애 대학생들이 겪는 고충은 더욱 심각하다.<br>
-                    코로나19가 막 시작되던 2020년 8개 시민단체가 청와대 앞에서<br>
-                    ‘코로나19에 따른 청각장애 학생들의 학습권 보장 촉구 기자회견’ 등을 하면서<br>
-                    장애 대학생들의 학습권 침해도 주목을 받았다.<br><br>
-
-                    코로나19 3년 차에 접어드는 현재, 상황은 크게 나아지지 않았다.<br>
-                    코로나19로 비대면 수업이 확대되면서 장애 대학생들의 학습권 침해도 심화되고 있는 것으로 나타났다.<br>
-                    ‘대학 장애학생 교육권 실태조사’ 자료에 따르면<br>
-                    응답자의 30.9%는 비대면 강의 상황에서 학습권 침해를 경험했다고 답변했다.<br>
-                    <br>
-                    .
-                    <br>
-                    .
-                    <br><br>
-
-                    한국 대학 신문 - 이지희 기자
-                </div>
-                <img src="./static/frontEnd/images/001.png" alt="Monitor" width="500px">
                 <div class="designLiner"></div>
             </div>
         </div>
     </div>
+
+
 
     <div class="signInDiv" hidden>
         <div class="signInDivInner alignCenter">
@@ -270,7 +128,9 @@
         </div>
     </div>
 
-    <div style="height: 200px"></div>
+    <div style="height: 200px; text-align: center; margin-top: 100px;">
+        <img src="./static/frontEnd/images/bottom_logo.png" alt="HALLYM Univ. LOGO" width="300px" id="bottomLogoImg">
+    </div>
     <script src="./static/frontEnd/js/signIn.js"></script>
     <script src="./static/frontEnd/js/joinRoom.js"></script>
 </body>
