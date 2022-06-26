@@ -1,8 +1,5 @@
 from http import server
-import re
 from socket import socket
-from textwrap import wrap
-from turtle import delay
 from flask import Flask,render_template,request  # 서버 구현을 위한 Flask 객체 import
 from pyngrok import ngrok ,conf # 외부 접속 링크 생성
 from flask_socketio import SocketIO, join_room, emit
@@ -10,13 +7,14 @@ import base64
 from datetime import datetime
 import ssl
 import csv
+# from flask_lt import run_with_lt
 
 # users = []
-
 serverActive = False
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins='*')
+# run_with_lt(socketio)
 
 @app.route("/")
 def hello_world():
@@ -31,6 +29,8 @@ def hello_world():
     #         print(kk)
 
     #     serverActive = True
+
+
 
     return render_template('index.html')
 
